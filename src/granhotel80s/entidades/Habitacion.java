@@ -1,18 +1,17 @@
-
 package granhotel80s.entidades;
 
-public class habitacion {
-    
+public class Habitacion {
+
     private int idHabitacion;
     private String categoria;
     private int Piso;
     private int nroHabitacion;
     private boolean estado;
 
-    public habitacion() {
+    public Habitacion() {
     }
 
-    public habitacion(int idHabitacion, String categoria, int Piso, int nroHabitacion, boolean estado) {
+    public Habitacion(int idHabitacion, String categoria, int Piso, int nroHabitacion, boolean estado) {
         this.idHabitacion = idHabitacion;
         this.categoria = categoria;
         this.Piso = Piso;
@@ -20,7 +19,7 @@ public class habitacion {
         this.estado = estado;
     }
 
-    public habitacion(String categoria, int Piso, int nroHabitacion, boolean estado) {
+    public Habitacion(String categoria, int Piso, int nroHabitacion, boolean estado) {
         this.categoria = categoria;
         this.Piso = Piso;
         this.nroHabitacion = nroHabitacion;
@@ -71,5 +70,5 @@ public class habitacion {
     public String toString() {
         return "habitacion{" + "idHabitacion=" + idHabitacion + ", categoria=" + categoria + ", Piso=" + Piso + ", nroHabitacion=" + nroHabitacion + ", estado=" + estado + '}';
     }
-    
+
 }

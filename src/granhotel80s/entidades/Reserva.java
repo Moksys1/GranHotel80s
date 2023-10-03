@@ -12,14 +12,15 @@ import java.time.LocalDate;
  * @author Usuario
  */
 public class Reserva {
-    private int idReserva ;
+
+    private int idReserva;
     private int idHuesped;
     private int idHabitacion;
-    private int  cantPersonas;
-    private  LocalDate fechaEntrada;
-    private  LocalDate fechaSalida;
-    private double importeTotal; 
-    private boolean estado;	
+    private int cantPersonas;
+    private LocalDate fechaEntrada;
+    private LocalDate fechaSalida;
+    private double importeTotal;
+    private boolean estado;
 
     public Reserva(int idReserva, int idHuesped, int idHabitacion, int cantPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, double importeTotal, boolean estado) {
         this.idReserva = idReserva;
@@ -40,8 +41,8 @@ public class Reserva {
         this.estado = estado;
     }
 
-  public Reserva (){
-  }
+    public Reserva() {
+    }
 
     public int getIdReserva() {
         return idReserva;

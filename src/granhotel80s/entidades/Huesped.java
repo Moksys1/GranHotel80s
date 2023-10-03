@@ -1,6 +1,7 @@
 package granhotel80s.entidades;
 
 public class Huesped {
+
     private int idHuesped;
     private int dni;
     private String nombre;
@@ -9,7 +10,7 @@ public class Huesped {
     private String domicilio;
     private String telefono;
     private boolean estado;
-    
+
     public Huesped() {
     }
 
