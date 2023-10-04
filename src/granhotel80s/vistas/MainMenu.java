@@ -5,17 +5,26 @@
  */
 package granhotel80s.vistas;
 
+import granhotel80s.accesoADatos.Conexion;
+import java.sql.Connection;
+
 /**
  *
  * @author Moksys
  */
 public class MainMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainMenu
-     */
     public MainMenu() {
         initComponents();
+        // Realizo la coneccion a la DB, si fue exitosa agrego al titulo
+        // conectado para no tener ese molesto dialogo de conexion ;)
+        Connection con = Conexion.getConnection();
+        // Si la conexion fue exitosa cambio el titulo del Frame del menu
+        if (con != null) {
+            this.setTitle("Sistema de Reserva de Habitaciones y Gestión de Ventas - Gran Hotel 80s - Estado: Conectado");
+        } else {
+            this.setTitle("Sistema de Reserva de Habitaciones y Gestión de Ventas - Gran Hotel 80s - Estado: Error");
+        }
     }
 
     /**
