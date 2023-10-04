@@ -93,7 +93,7 @@ public class HuespedData {
     }
     
     public void modificarHuesped (Huesped huesped) {
-        String sql ="UPDATE huesped SET dni=?,nombre=?,apellido=?,correo=?,domicilio=?,telefono=?,estado=? WHERE idHuesped = ?";
+        String sql ="UPDATE huesped SET dni = ? , nombre = ? , apellido = ? , correo = ? , domicilio = ? , telefono = ? WHERE idHuesped = ?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
