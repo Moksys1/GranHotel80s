@@ -24,11 +24,25 @@ public class GranHotel80s {
         Connection con = Conexion.getConnection();
         
         HuespedData hd = new HuespedData();
-        
-        Huesped persona = new Huesped(42862742, "Orlando", "Fornas", "orlandofornas@gmail.com", "Reconquista", "2615970271", true);
-        hd.guardarHuesped(persona);
-        
-        
+        //agregar Huesped
+//        Huesped persona = new Huesped(42862742, "or", "Fornas", "orlandofornas@gmail.com", "Reconquista", "2615970271", true);
+        //hd.guardarHuesped(persona);
+        //Eliminar Huesped 
+         
+        //hd.eliminarHuesped(2);
+        // buscar huesped
+//        hd.BuscarHuesped(2);
+          // Modificar Datos del huesped
+          Huesped persona = new Huesped();
+          persona.setIdHuesped(2);
+          persona.setNombre("kevin");
+       hd.modificarHuesped(persona);
+    
+    
+
+          
+       
     }
+
     
 }
