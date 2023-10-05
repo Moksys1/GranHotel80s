@@ -50,6 +50,7 @@ public class MainMenu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -146,6 +147,10 @@ public class MainMenu extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setText("Registro Huespedes");
+        jMenu4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuBar1.add(jMenu4);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,6 +215,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSpinner jSpinner1;
     // End of variables declaration//GEN-END:variables
