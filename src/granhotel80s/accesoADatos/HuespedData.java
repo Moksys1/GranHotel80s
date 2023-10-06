@@ -7,9 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 public class HuespedData {
@@ -66,7 +63,7 @@ public class HuespedData {
     }
     public Huesped BuscarHuesped(int id) {
         Huesped huesped = null;
-        String sql = "SELECT idHuesped, dni, nombre, apellido, correo, domicilio, telefono, estado FROM huesped WHERE 1";
+        String sql = "SELECT idHuesped, dni, nombre, apellido, correo, domicilio, telefono FROM huesped WHERE idHuesped = ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -121,47 +118,4 @@ public class HuespedData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla huesped");
         }
     }
-  
-    public List<Huesped> obtenerHuespedesConReservas(int idReserva) {
-        List<Huesped> listaHuespedes = new ArrayList<>();
-        String sql = "SELECT h.idHuesped, h.nombre, r.idReserva, r.fechaEntrada, r.fechaSalida FROM huesped h " +
-                     "LEFT JOIN reserva r ON h.idHuesped = r.idHuesped";
-        PreparedStatement ps = null;
-        try {
-            ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            
-            while (rs.next()) {
-                int idHuesped = rs.getInt("idHuesped");
-                String nombreHuesped = rs.getString("nombre");
-                idReserva = rs.getInt("idReserva");
-                LocalDate fechaEntrada = rs.getDate("fechaEntrada").toLocalDate();
-                LocalDate fechaSalida = rs.getDate("fechaSalida").toLocalDate();
-//              if(idReserva ==null){
-//                  JOptionPane.showMessageDialog(null,"la Reserva no existe ");
-//              }  
-               
-               
-            }
-            
-            rs.close();
-            ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-        return listaHuespedes;
-    }
-
-    // Cerrar la conexión a la base de datos
-    public void cerrarConexion() {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
 }
-
