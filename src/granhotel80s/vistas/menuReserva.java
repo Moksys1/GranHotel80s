@@ -113,6 +113,11 @@ public class menuReserva extends javax.swing.JInternalFrame {
 
         jButton2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jButton2.setText("Buscar Reserva");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -325,6 +330,18 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        BusquedaReservacion busqres = new BusquedaReservacion();
+        MainMenu.escritorio.add(busqres);
+        busqres.toFront();
+        busqres.setVisible(true);
+        Dimension desktopSize = MainMenu.escritorio.getSize();
+        Dimension FrameSize = busqres.getSize();
+        busqres.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
