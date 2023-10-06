@@ -47,7 +47,7 @@ public class HabitacionData {
         }
     }
     
-    public void modificarHabitacion (Habitacion habitacion) {
+    public void modificarHabitacion(Habitacion habitacion) {
         String sql = "UPDATE habitacion SET categoria = ? ,Piso = ?, nroHabitacion = ? WHERE idHabitacion = ? ";
         PreparedStatement ps = null;
         try {
@@ -56,7 +56,7 @@ public class HabitacionData {
             ps.setString(1, habitacion.getCategoria());
             ps.setInt(2, habitacion.getPiso());
             ps.setInt(3, habitacion.getNroHabitacion());
-            ps.setInt(3, habitacion.getIdHabitacion());
+            ps.setInt(4, habitacion.getIdHabitacion());
             
             int exito = ps.executeUpdate();
             if (exito > 0) {
@@ -117,37 +117,60 @@ public class HabitacionData {
 
     }
     
-//    public List<Habitacion> obtenerHabitacionesDespupadas(int idMateria) {
-//
-//        ArrayList<Alumno> alumnosMateria = new ArrayList<>();
-//
-//        String sql = "SELECT a.idAlumno, dni, apellido, nombre, fechaNac, estado "
-//                + "FROM inscripcion i,alumno a WHERE i.idAlumno = a.idAlumno AND idMateria = ? AND a.estado = 1";
-//
-//        try {
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setInt(1, idMateria);
-//
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//
-//                Alumno alumno = new Alumno();
-//                alumno.setIdAlumno(rs.getInt("idAlumno"));
-//                alumno.setDni(rs.getInt("dni"));
-//                alumno.setApellido(rs.getString("apellido"));
-//                alumno.setNombre(rs.getString("nombre"));
-//                alumno.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-//                alumno.setActivo(rs.getBoolean("estado"));
-//                alumnosMateria.add(alumno);
-//            }
-//            ps.close();
-//
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion");
-//        }
-//
-//        return alumnosMateria;
-//
-//    }
+    public List<Habitacion> obtenerHabitacionesDesopupadas() {
+
+        ArrayList<Habitacion> habitDesocupadas = new ArrayList<>();
+
+        String sql = "SELECT * FROM habitacion WHERE estado = 1 ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Habitacion habi = new Habitacion();
+                habi.setIdHabitacion(rs.getInt("idHabitacion"));
+                habi.setCategoria(rs.getString("categoria"));
+                habi.setPiso(rs.getInt("Piso"));
+                habi.setNroHabitacion(rs.getInt("nroHabitacion"));
+                habitDesocupadas.add(habi);
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
+        }
+
+        return habitDesocupadas;
+
+    }
+    
+    public List<Habitacion> obtenerHabitacionesOcupadas() {
+
+        ArrayList<Habitacion> habitDesocupadas = new ArrayList<>();
+
+        String sql = "SELECT * FROM habitacion WHERE estado = 0 ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Habitacion habi = new Habitacion();
+                habi.setIdHabitacion(rs.getInt("idHabitacion"));
+                habi.setCategoria(rs.getString("categoria"));
+                habi.setPiso(rs.getInt("Piso"));
+                habi.setNroHabitacion(rs.getInt("nroHabitacion"));
+                habitDesocupadas.add(habi);
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
+        }
+
+        return habitDesocupadas;
+
+    }
     
 }
