@@ -29,13 +29,13 @@ public class GranHotel80s {
         //hd.guardarHuesped(persona);
         
          //Eliminar Huesped 
-        //hd.eliminarHuesped(2);
+        // hd.eliminarHuesped(2);
         
         // buscar huesped
-//        hd.BuscarHuesped(2);
+//         hd.BuscarHuesped(2);
 
           // Modificar Datos del huesped
-//            hd.modificarHuesped(persona);
+//           hd.modificarHuesped(persona);
     
     
 
