@@ -28,12 +28,12 @@ public class GranHotel80s {
         Connection con = Conexion.getConnection();
         HuespedData hd = new HuespedData();
         HabitacionData habiData = new HabitacionData();
-        TipoHabitacion tHab1 = new TipoHabitacion();
+        TipoHabitacion tHab1 = new TipoHabitacion(213, "SuQSi", 3, 2, "QSi", 22500, true);
         TipoHabitacionData tHabData1 = new TipoHabitacionData();
 //----------------------------------------------------------------------------------------
   
-    //tHabData1.guardarTipoHabitacion(213, "SuQSi", 3, 2, "QSi", 22500, true);
-      tHabData1.guardarTipoHabitacion(213, "SuQSi", 3, 2, "QSi", 22500, true);
+        // Test de tipo de habitacion
+        //tHabData1.guardarTipoHabitacion(tHab1);
 //----------------------------------------------------------------------------------------           
         //Huesped persona = new Huesped(2, 42862742, "Or", "Fornas", "orlandofornas@gmail.com", "Reconquista", "2615970271", true);
         
