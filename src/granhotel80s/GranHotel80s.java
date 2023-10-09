@@ -8,8 +8,10 @@ package granhotel80s;
 import granhotel80s.accesoADatos.Conexion;
 import granhotel80s.accesoADatos.HabitacionData;
 import granhotel80s.accesoADatos.HuespedData;
+import granhotel80s.accesoADatos.TipoHabitacionData;
 import granhotel80s.entidades.Habitacion;
 import granhotel80s.entidades.Huesped;
+import granhotel80s.entidades.TipoHabitacion;
 import java.sql.Connection;
 
 /**
@@ -26,7 +28,12 @@ public class GranHotel80s {
         Connection con = Conexion.getConnection();
         HuespedData hd = new HuespedData();
         HabitacionData habiData = new HabitacionData();
-        
+        TipoHabitacion tHab1 = new TipoHabitacion();
+        TipoHabitacionData tHabData1 = new TipoHabitacionData();
+//----------------------------------------------------------------------------------------
+  
+    //tHabData1.guardarTipoHabitacion(213, "SuQSi", 3, 2, "QSi", 22500, true);
+      tHabData1.guardarTipoHabitacion(213, "SuQSi", 3, 2, "QSi", 22500, true);
 //----------------------------------------------------------------------------------------           
         //Huesped persona = new Huesped(2, 42862742, "Or", "Fornas", "orlandofornas@gmail.com", "Reconquista", "2615970271", true);
         
@@ -51,7 +58,7 @@ public class GranHotel80s {
 
      
         //agregar habitacion
-        Habitacion cuarto = new Habitacion("Doble", 1, 1, true);
+        //Habitacion cuarto = new Habitacion("Doble", 1, 1, true);
         //habiData.guardarHabitacion(cuarto);
         
 //----------------------------------------------------------------------------------------        
