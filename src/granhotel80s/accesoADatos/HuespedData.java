@@ -92,6 +92,36 @@ public class HuespedData {
         return huesped;
     }
     
+    public Huesped BuscarHuespedPorDni(int dni) {
+        Huesped huesped = null;
+        String sql = "SELECT idHuesped, dni, nombre, apellido, correo, domicilio, telefono FROM huesped WHERE dni=? AND estado =1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                huesped = new Huesped();
+                huesped.setIdHuesped(rs.getInt("idHuesped"));
+                huesped.setDni(rs.getInt("dni"));
+                huesped.setNombre(rs.getString("nombre"));
+                huesped.setApellido(rs.getString("apellido"));
+                huesped.setCorreo(rs.getString("correo"));
+                huesped.setDomicilio(rs.getString("domicilio"));
+                huesped.setTelefono(rs.getString("telefono"));
+                huesped.setEstado(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un huesped con el DNI ingresado.");
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla huesped.");
+        }
+        return huesped;
+    }
+    
     public void modificarHuesped (Huesped huesped) {
         String sql ="UPDATE huesped SET dni = ? , nombre = ? , apellido = ? , correo = ? , domicilio = ? , telefono = ? WHERE idHuesped = ?";
         PreparedStatement ps = null;
