@@ -11,7 +11,6 @@ package granhotel80s.entidades;
  */
 public class TipoHabitacion {
     private int idTipoHabitacion;
-    private int idHabitacion;
     private String codigo;
     private int cantMaxPersonas;
     private int CantCamas;
@@ -22,9 +21,8 @@ public class TipoHabitacion {
     public TipoHabitacion() {
     }
 
-    public TipoHabitacion(int idTipoHabitacion, int idHabitacion, String codigo, int cantMaxPersonas, int CantCamas, String TipoDeCamas, double Precio, boolean estado) {
+    public TipoHabitacion(int idTipoHabitacion, String codigo, int cantMaxPersonas, int CantCamas, String TipoDeCamas, double Precio, boolean estado) {
         this.idTipoHabitacion = idTipoHabitacion;
-        this.idHabitacion = idHabitacion;
         this.codigo = codigo;
         this.cantMaxPersonas = cantMaxPersonas;
         this.CantCamas = CantCamas;
@@ -33,8 +31,7 @@ public class TipoHabitacion {
         this.estado = estado;
     }
 
-    public TipoHabitacion(int idHabitacion, String codigo, int cantMaxPersonas, int CantCamas, String TipoDeCamas, double Precio, boolean estado) {
-        this.idHabitacion = idHabitacion;
+    public TipoHabitacion(String codigo, int cantMaxPersonas, int CantCamas, String TipoDeCamas, double Precio, boolean estado) {
         this.codigo = codigo;
         this.cantMaxPersonas = cantMaxPersonas;
         this.CantCamas = CantCamas;
@@ -49,14 +46,6 @@ public class TipoHabitacion {
 
     public void setIdTipoHabitacion(int idTipoHabitacion) {
         this.idTipoHabitacion = idTipoHabitacion;
-    }
-
-    public int getIdHabitacion() {
-        return idHabitacion;
-    }
-
-    public void setIdHabitacion(int idHabitacion) {
-        this.idHabitacion = idHabitacion;
     }
 
     public String getCodigo() {
@@ -109,8 +98,7 @@ public class TipoHabitacion {
 
     @Override
     public String toString() {
-        return "TipoHabitacion{" + "idHabitacion=" + idHabitacion + ", codigo=" + codigo + ", cantMaxPersonas=" + cantMaxPersonas + ", CantCamas=" + CantCamas + ", TipoDeCamas=" + TipoDeCamas + ", Precio=" + Precio + ", estado=" + estado + '}';
+        return "" + "" + idTipoHabitacion + "," + codigo + "," + cantMaxPersonas + "," + CantCamas + "," + TipoDeCamas + "," + Precio + "," + estado + '}';
     }
-    
     
 }

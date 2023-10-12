@@ -19,29 +19,28 @@ public class Reserva {
     private int cantPersonas;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
-    private double importeTotal;
     private boolean estado;
 
-    public Reserva(int idReserva, int idHuesped, int idHabitacion, int cantPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, double importeTotal, boolean estado) {
+    public Reserva() {
+    }
+
+    public Reserva(int idReserva, int idHuesped, int idHabitacion, int cantPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, boolean estado) {
         this.idReserva = idReserva;
         this.idHuesped = idHuesped;
         this.idHabitacion = idHabitacion;
         this.cantPersonas = cantPersonas;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.importeTotal = importeTotal;
         this.estado = estado;
     }
 
-    public Reserva(int cantPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, double importeTotal, boolean estado) {
+    public Reserva(int idHuesped, int idHabitacion, int cantPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, boolean estado) {
+        this.idHuesped = idHuesped;
+        this.idHabitacion = idHabitacion;
         this.cantPersonas = cantPersonas;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.importeTotal = importeTotal;
         this.estado = estado;
-    }
-
-    public Reserva() {
     }
 
     public int getIdReserva() {
@@ -92,14 +91,6 @@ public class Reserva {
         this.fechaSalida = fechaSalida;
     }
 
-    public double getImporteTotal() {
-        return importeTotal;
-    }
-
-    public void setImporteTotal(double importeTotal) {
-        this.importeTotal = importeTotal;
-    }
-
     public boolean isEstado() {
         return estado;
     }
@@ -110,7 +101,7 @@ public class Reserva {
 
     @Override
     public String toString() {
-        return "Reserva{" +" " + idReserva + ", " + idHuesped + " ," + idHabitacion + "," + cantPersonas + "," + fechaEntrada + ", " + fechaSalida + "," + importeTotal + ", " + estado + '}';
+        return "" + "" + idReserva + "," + idHuesped + "," + idHabitacion + "," + cantPersonas + "," + fechaEntrada + "," + fechaSalida + "," + estado + '}';
     }
-
+    
 }

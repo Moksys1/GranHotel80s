@@ -3,6 +3,7 @@ package granhotel80s.entidades;
 public class Habitacion {
 
     private int idHabitacion;
+    private int idTipoHabitacion;
     private String categoria;
     private int Piso;
     private int nroHabitacion;
@@ -11,15 +12,17 @@ public class Habitacion {
     public Habitacion() {
     }
 
-    public Habitacion(int idHabitacion, String categoria, int Piso, int nroHabitacion, boolean estado) {
+    public Habitacion(int idHabitacion, int idTipoHabitacion, String categoria, int Piso, int nroHabitacion, boolean estado) {
         this.idHabitacion = idHabitacion;
+        this.idTipoHabitacion = idTipoHabitacion;
         this.categoria = categoria;
         this.Piso = Piso;
         this.nroHabitacion = nroHabitacion;
         this.estado = estado;
     }
 
-    public Habitacion(String categoria, int Piso, int nroHabitacion, boolean estado) {
+    public Habitacion(int idTipoHabitacion, String categoria, int Piso, int nroHabitacion, boolean estado) {
+        this.idTipoHabitacion = idTipoHabitacion;
         this.categoria = categoria;
         this.Piso = Piso;
         this.nroHabitacion = nroHabitacion;
@@ -32,6 +35,14 @@ public class Habitacion {
 
     public void setIdHabitacion(int idHabitacion) {
         this.idHabitacion = idHabitacion;
+    }
+
+    public int getIdTipoHabitacion() {
+        return idTipoHabitacion;
+    }
+
+    public void setIdTipoHabitacion(int idTipoHabitacion) {
+        this.idTipoHabitacion = idTipoHabitacion;
     }
 
     public String getCategoria() {
@@ -68,7 +79,7 @@ public class Habitacion {
 
     @Override
     public String toString() {
-        return "habitacion{" + "idHabitacion=" + idHabitacion + ", categoria=" + categoria + ", Piso=" + Piso + ", nroHabitacion=" + nroHabitacion + ", estado=" + estado + '}';
+        return "" + "" + idHabitacion + "," + idTipoHabitacion + "," + categoria + "," + Piso + "," + nroHabitacion + "," + estado + '}';
     }
 
 }
