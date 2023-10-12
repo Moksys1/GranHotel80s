@@ -8,7 +8,6 @@
 //
 //⮚	Método “finReserva” recibe un Huésped, permite buscar una reserva se marca, de Activa(1) a Inactiva(0). Se busca la habitación y se marca Libre(0). 
 //⮚	Búsqueda de Reservas por huésped o fechas: devuelve una Reserva.
-
 package granhotel80s.accesoADatos;
 
 import granhotel80s.entidades.Reserva;
@@ -25,8 +24,7 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class ReservaData {
-    
-    
+
     private Connection con = null;
 
     {
@@ -34,20 +32,20 @@ public class ReservaData {
         con = Conexion.getConnection();
 
     }
-     public void crearReserva(Reserva reser) {
 
-        String sql = "reserva(idHuesped, idHabitacion, cantPersonas, fechaEntrada, fechaSalida, importeTotal, estado)"
-                + "VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+    public void crearReserva(Reserva reser) {
+
+        String sql = "INSERT INTO reserva(idHuesped, idHabitacion, cantPersonas, fechaEntrada, fechaSalida, estado)"
+                + "VALUES ( ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, reser.getIdHuesped());
             ps.setInt(2, reser.getIdHabitacion());
             ps.setInt(3, reser.getCantPersonas());
-            ps.setDate(4,Date.valueOf(reser.getFechaEntrada()));
-            ps.setDate(5,Date.valueOf(reser.getFechaSalida()));
-            ps.setDouble(6, reser.getImporteTotal());
-            ps.setBoolean(7, reser.isEstado());
+            ps.setDate(4, Date.valueOf(reser.getFechaEntrada()));
+            ps.setDate(5, Date.valueOf(reser.getFechaSalida()));
+            ps.setBoolean(6, reser.isEstado());
             ps.executeQuery();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -60,9 +58,10 @@ public class ReservaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva");
 
-       }
-     }
-         public void eliminarReserva(int id) {
+        }
+    }
+
+    public void eliminarReserva(int id) {
         String sql = "UPDATE reserva SET estado = 0 WHERE idReserva = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -75,19 +74,19 @@ public class ReservaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva.");
         }
-        
+
     }
-      
-        public Reserva BuscarReserva(int id) {
+
+    public Reserva BuscarReserva(int id) {
         Reserva reserva = null;
-        String sql = "UPDATE reserva SET idReserva, idHuesped,idHabitacion,cantPersonas,fechaEntrada,fechaSalida,importeTotal,estado WHERE 1";
+        String sql = "SELECT idReserva, idHuesped, idHabitacion, cantPersonas, fechaEntrada, fechaSalida FROM reserva WHERE idReserva = ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                reserva= new Reserva();
+                reserva = new Reserva();
                 reserva.setIdReserva(rs.getInt("idReserva"));
                 reserva.setIdHuesped(rs.getInt("idHuesped"));
                 reserva.setIdHabitacion(rs.getInt("idHabitacion"));
@@ -107,21 +106,20 @@ public class ReservaData {
         }
         return reserva;
     }
-         public void modificarReserva (Reserva reser) {
-        String sql ="UPDATE reserva SET idHuesped,idHabitacion,cantPersonas,fechaEntrada,fechaSalida,importeTotal,estado WHERE 1";
+
+    public void modificarReserva(Reserva reser) {
+        String sql = "UPDATE reserva SET idHuesped = ?, idHabitacion = ?, cantPersonas = ?, fechaEntrada = ?, fechaSalida = ? WHERE idReserva = ? ";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            
+
             ps.setInt(1, reser.getIdHuesped());
             ps.setInt(2, reser.getIdHabitacion());
             ps.setInt(3, reser.getCantPersonas());
             ps.setDate(4, Date.valueOf(reser.getFechaEntrada()));
-            ps.setDate(5,  Date.valueOf(reser.getFechaSalida()));
-            ps.setDouble(6, reser.getImporteTotal());
-            ps.setBoolean(7, reser.isEstado());
-            
-            
+            ps.setDate(5, Date.valueOf(reser.getFechaSalida()));
+            ps.setBoolean(6, reser.isEstado());
+
             int exito = ps.executeUpdate();
             if (exito > 0) {
                 JOptionPane.showMessageDialog(null, "Modificado correctamente");
@@ -132,28 +130,27 @@ public class ReservaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva");
         }
-        
+
     }
-         
-         public void cambiarEstadoReserva(int idReserva) {
-    String sql = "UPDATE reserva SET estado = NOT estado WHERE idReserva = ?";
-    PreparedStatement ps = null;
-    try {
-        ps = con.prepareStatement(sql);
-        ps.setInt(1, idReserva);
-        
-        int filasActualizadas = ps.executeUpdate();
-        
-        if (filasActualizadas > 0) {
-            System.out.println("El estado de la reserva ha sido cambiado con éxito.");
-        } else {
-            System.out.println("No se pudo cambiar el estado de la reserva.");
+
+    public void cambiarEstadoReserva(int idReserva) {
+        String sql = "UPDATE reserva SET estado = NOT estado WHERE idReserva = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idReserva);
+
+            int filasActualizadas = ps.executeUpdate();
+
+            if (filasActualizadas > 0) {
+                System.out.println("El estado de la reserva ha sido cambiado con éxito.");
+            } else {
+                System.out.println("No se pudo cambiar el estado de la reserva.");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        
-        ps.close();
-    } catch (SQLException ex) {
-        ex.printStackTrace();
     }
 }
- }
-

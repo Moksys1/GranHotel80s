@@ -23,15 +23,16 @@ public class HabitacionData {
 }
     
     public void guardarHabitacion(Habitacion habitacion) {
-        String sql = "INSERT INTO habitacion(categoria, Piso, nroHabitacion, estado) "
-                + " VALUES (? , ? , ? , ?)";
+        String sql = "INSERT INTO habitacion(idTipoHabitacion, categoria, Piso, nroHabitacion, estado) "
+                + " VALUES (?, ? , ? , ? , ?)";
                 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, habitacion.getCategoria());
-            ps.setInt(2, habitacion.getPiso());
-            ps.setInt(3, habitacion.getNroHabitacion());
-            ps.setBoolean(4, habitacion.isEstado());            
+            ps.setInt(1, habitacion.getIdTipoHabitacion());
+            ps.setString(2, habitacion.getCategoria());
+            ps.setInt(3, habitacion.getPiso());
+            ps.setInt(4, habitacion.getNroHabitacion());
+            ps.setBoolean(5, habitacion.isEstado());            
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -48,15 +49,16 @@ public class HabitacionData {
     }
     
     public void modificarHabitacion(Habitacion habitacion) {
-        String sql = "UPDATE habitacion SET categoria = ? ,Piso = ?, nroHabitacion = ? WHERE idHabitacion = ? ";
+        String sql = "UPDATE habitacion SET idTipoHabitacion = ?,categoria = ? ,Piso = ?, nroHabitacion = ? WHERE idHabitacion = ? ";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
             
-            ps.setString(1, habitacion.getCategoria());
-            ps.setInt(2, habitacion.getPiso());
-            ps.setInt(3, habitacion.getNroHabitacion());
-            ps.setInt(4, habitacion.getIdHabitacion());
+            ps.setInt(1, habitacion.getIdTipoHabitacion());
+            ps.setString(2, habitacion.getCategoria());
+            ps.setInt(3, habitacion.getPiso());
+            ps.setInt(4, habitacion.getNroHabitacion());
+            ps.setInt(5, habitacion.getIdHabitacion());
             
             int exito = ps.executeUpdate();
             if (exito > 0) {
@@ -101,6 +103,7 @@ public class HabitacionData {
 
                 Habitacion habi = new Habitacion();
                 habi.setIdHabitacion(rs.getInt("idHabitacion"));
+                habi.setIdTipoHabitacion(rs.getInt("idTipoHabitacion"));
                 habi.setCategoria(rs.getString("categoria"));
                 habi.setPiso(rs.getInt("Piso"));
                 habi.setNroHabitacion(rs.getInt("nroHabitacion"));
@@ -130,6 +133,7 @@ public class HabitacionData {
 
                 Habitacion habi = new Habitacion();
                 habi.setIdHabitacion(rs.getInt("idHabitacion"));
+                habi.setIdTipoHabitacion(rs.getInt("idTipoHabitacion"));
                 habi.setCategoria(rs.getString("categoria"));
                 habi.setPiso(rs.getInt("Piso"));
                 habi.setNroHabitacion(rs.getInt("nroHabitacion"));
@@ -158,6 +162,7 @@ public class HabitacionData {
 
                 Habitacion habi = new Habitacion();
                 habi.setIdHabitacion(rs.getInt("idHabitacion"));
+                habi.setIdTipoHabitacion(rs.getInt("idTipoHabitacion"));
                 habi.setCategoria(rs.getString("categoria"));
                 habi.setPiso(rs.getInt("Piso"));
                 habi.setNroHabitacion(rs.getInt("nroHabitacion"));

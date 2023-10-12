@@ -27,18 +27,17 @@ public class TipoHabitacionData {
     }
 
     public void guardarTipoHabitacion(TipoHabitacion tHabitacion) {
-        String sql = "INSERT INTO tipohabitacion(idHabitacion, codigo, cantMaxPersonas, CantCamas, TipoDeCamas, Precio, estado)"
+        String sql = "INSERT INTO tipohabitacion(codigo, cantMaxPersonas, CantCamas, TipoDeCamas, Precio, estado)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, tHabitacion.getIdHabitacion());
-            ps.setString(2, tHabitacion.getCodigo());
-            ps.setInt(3, tHabitacion.getCantMaxPersonas());
-            ps.setInt(4, tHabitacion.getCantCamas());
-            ps.setString(5, tHabitacion.getTipoDeCamas());
-            ps.setDouble(6, tHabitacion.getPrecio());
-            ps.setBoolean(7, tHabitacion.isEstado());
+            ps.setString(1, tHabitacion.getCodigo());
+            ps.setInt(2, tHabitacion.getCantMaxPersonas());
+            ps.setInt(3, tHabitacion.getCantCamas());
+            ps.setString(4, tHabitacion.getTipoDeCamas());
+            ps.setDouble(5, tHabitacion.getPrecio());
+            ps.setBoolean(6, tHabitacion.isEstado());
 
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -54,20 +53,19 @@ public class TipoHabitacionData {
     }
 
     public void modificarTipoHabitacion(TipoHabitacion tHabitacion) {
-        String sql = "UPDATE tipohabitacion SET idHabitacion = ? ,codigo = ? ,cantMaxPersonas = ?, CantCamas = ?, "
+        String sql = "UPDATE tipohabitacion SET codigo = ? ,cantMaxPersonas = ?, CantCamas = ?, "
                 + "TipoDeCamas = ?, Precio = ? ,estado = ? WHERE idTipoHabitacion = ? ";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
             
-            ps.setInt(1, tHabitacion.getIdHabitacion());
-            ps.setString(2, tHabitacion.getCodigo());
-            ps.setInt(3, tHabitacion.getCantMaxPersonas());
-            ps.setInt(4, tHabitacion.getCantCamas());
-            ps.setString(5, tHabitacion.getTipoDeCamas());
-            ps.setDouble(6, tHabitacion.getPrecio());
-            ps.setBoolean(7, tHabitacion.isEstado());
-            ps.setInt(8, tHabitacion.getIdTipoHabitacion());
+            ps.setString(1, tHabitacion.getCodigo());
+            ps.setInt(2, tHabitacion.getCantMaxPersonas());
+            ps.setInt(3, tHabitacion.getCantCamas());
+            ps.setString(4, tHabitacion.getTipoDeCamas());
+            ps.setDouble(5, tHabitacion.getPrecio());
+            ps.setBoolean(6, tHabitacion.isEstado());
+            ps.setInt(7, tHabitacion.getIdTipoHabitacion());
 
             int exito = ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
