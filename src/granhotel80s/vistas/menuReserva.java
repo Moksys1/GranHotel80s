@@ -5,19 +5,27 @@
  */
 package granhotel80s.vistas;
 
+import granhotel80s.accesoADatos.HabitacionData;
+import granhotel80s.accesoADatos.HuespedData;
+import granhotel80s.accesoADatos.ReservaData;
+import granhotel80s.entidades.Reserva;
 import java.awt.Dimension;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Usuario
- */
 public class menuReserva extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form menuReserva
-     */
+    private DefaultTableModel modelo;
+    private HuespedData huData;
+    private HabitacionData habData;
+    private ReservaData reData;
+    private List<Reserva> listaR;
     public menuReserva() {
         initComponents();
+        huData=new HuespedData();
+        habData=new HabitacionData();
+        reData =new ReservaData ();
+        modelo = (DefaultTableModel) jTreserva.getModel();
     }
 
     /**
@@ -46,7 +54,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTreserva = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jButtonReservar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -185,8 +193,8 @@ public class menuReserva extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
-        jTable1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTreserva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTreserva.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -194,7 +202,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
                 "Codigo", "Tipo de habitacion", "Personas", "Tipo de cama", "Tarifa", "Estado"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTreserva);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -364,8 +372,11 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTreserva;
     // End of variables declaration//GEN-END:variables
+private void cargarDatos(Reserva res) {
+        modelo.addRow(new Object[]{res.getIdHuesped(),res.getIdHabitacion(),res.getCantPersonas(), res.getFechaEntrada(),res.getFechaSalida(),res.isEstado()});
+    }
 }
