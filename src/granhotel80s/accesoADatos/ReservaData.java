@@ -17,6 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -153,4 +155,36 @@ public class ReservaData {
             ex.printStackTrace();
         }
     }
+    
+    public List<Reserva> listarReservas() {
+
+        ArrayList<Reserva> reserva = new ArrayList<>();
+
+        String sql = "SELECT * FROM reserva";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Reserva rese = new Reserva();
+                rese.setIdReserva(rs.getInt("idReserva"));
+                rese.setIdHuesped(rs.getInt("idHuesped"));
+                rese.setIdHabitacion(rs.getInt("idHabitacion"));
+                rese.setCantPersonas(rs.getInt("cantPersonas"));
+                rese.setFechaEntrada(rs.getDate("fechaEntrada").toLocalDate());
+                rese.setFechaSalida(rs.getDate("fechaSalida").toLocalDate());
+                rese.setEstado(rs.getBoolean("estado"));
+                reserva.add(rese);
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
+        }
+
+        return reserva;
+
+    }
+    
 }

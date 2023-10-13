@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class HuespedData {
@@ -147,5 +149,37 @@ public class HuespedData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla huesped");
         }
+    }
+    
+    public List<Huesped> listarHuesped() {
+
+        ArrayList<Huesped> huesped = new ArrayList<>();
+
+        String sql = "SELECT * FROM huesped";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Huesped hues = new Huesped();
+                hues.setIdHuesped(rs.getInt("idHuesped"));
+                hues.setDni(rs.getInt("dni"));
+                hues.setNombre(rs.getString("nombre"));
+                hues.setApellido(rs.getString("apellido"));
+                hues.setCorreo(rs.getString("correo"));
+                hues.setDomicilio(rs.getString("domicilio"));
+                hues.setTelefono(rs.getString("telefono"));
+                hues.setEstado(rs.getBoolean("estado"));
+                huesped.add(hues);
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
+        }
+
+        return huesped;
+
     }
 }
