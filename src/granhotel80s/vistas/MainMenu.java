@@ -43,10 +43,10 @@ public class MainMenu extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuHuesped = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuReserva = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuRegistroReserva = new javax.swing.JMenuItem();
+        jMenuConsultaReserva = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -72,33 +72,38 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuHuesped.setText("Registro de Huespedes");
         jMenuHuesped.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jMenuHuesped.addActionListener(new java.awt.event.ActionListener() {
+
+        jMenuItem1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuItem1.setText("Huespedes y Busquedas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuHuespedActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
+        jMenuHuesped.add(jMenuItem1);
+
         jMenuBar1.add(jMenuHuesped);
 
         jMenuReserva.setText("Reservas");
         jMenuReserva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jMenuItem2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jMenuItem2.setText("Consulta de Reserva");
-        jMenuReserva.add(jMenuItem2);
-
-        jMenu4.setText("Registro de Huespedes");
-        jMenu4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        jMenuItem4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jMenuItem4.setText("Sobre nosotros");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuRegistroReserva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuRegistroReserva.setText("Registro de reservas");
+        jMenuRegistroReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenuRegistroReservaActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem4);
+        jMenuReserva.add(jMenuRegistroReserva);
 
-        jMenuReserva.add(jMenu4);
+        jMenuConsultaReserva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuConsultaReserva.setText("Consulta de Reserva");
+        jMenuConsultaReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuConsultaReservaActionPerformed(evt);
+            }
+        });
+        jMenuReserva.add(jMenuConsultaReserva);
 
         jMenuBar1.add(jMenuReserva);
 
@@ -176,15 +181,33 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHuespedActionPerformed
+    private void jMenuConsultaReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuConsultaReservaActionPerformed
+        // TODO add your handling code here:
+        BusquedaReservacion busqRes = new BusquedaReservacion();
+        MainMenu.escritorio.add(busqRes);
+        busqRes.toFront();
+        busqRes.setVisible(true);
+        Dimension desktopSize = MainMenu.escritorio.getSize();
+        Dimension FrameSize = busqRes.getSize();
+        busqRes.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+    }//GEN-LAST:event_jMenuConsultaReservaActionPerformed
+
+    private void jMenuRegistroReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRegistroReservaActionPerformed
+        // TODO add your handling code here:
+        menuReserva menRes = new menuReserva();
+        MainMenu.escritorio.add(menRes);
+        menRes.toFront();
+        menRes.setVisible(true);
+        Dimension desktopSize = MainMenu.escritorio.getSize();
+        Dimension FrameSize = menRes.getSize();
+        menRes.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+    }//GEN-LAST:event_jMenuRegistroReservaActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         RegistroHuespedes regHues = new RegistroHuespedes();
         MainMenu.escritorio.add(regHues);
@@ -193,7 +216,7 @@ public class MainMenu extends javax.swing.JFrame {
         Dimension desktopSize = MainMenu.escritorio.getSize();
         Dimension FrameSize = regHues.getSize();
         regHues.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
-    }//GEN-LAST:event_jMenuHuespedActionPerformed
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,14 +257,14 @@ public class MainMenu extends javax.swing.JFrame {
     public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuConsultaReserva;
     private javax.swing.JMenu jMenuHuesped;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuRegistroReserva;
     private javax.swing.JMenu jMenuReserva;
     private javax.swing.JMenu jSalir;
     // End of variables declaration//GEN-END:variables

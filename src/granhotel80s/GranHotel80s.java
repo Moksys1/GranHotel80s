@@ -31,13 +31,13 @@ public class GranHotel80s {
         //TipoHabitacion tHab1 = new TipoHabitacion(213, "SuQSi", 3, 2, "QSi", 22500, true);
         
         //TipoHabitacion tHab213 = new TipoHabitacion(1, 213, "ET3S", 3, 3, "3S", 8550, true);
-        TipoHabitacion tHab11 = new TipoHabitacion(1, 11, "ET3S", 2, 3, "3S", 7050, true);
+//        TipoHabitacion tHab11 = new TipoHabitacion(1, 11, "ET3S", 2, 3, "3S", 7050, true);
         
         TipoHabitacionData tHabData1 = new TipoHabitacionData();
 //----------------------------------------------------------------------------------------
         // Test de tipo de habitacion
         //tHabData1.modificarTipoHabitacion(tHab213);
-        tHabData1.guardarTipoHabitacion(tHab11);
+//        tHabData1.guardarTipoHabitacion(tHab11);
 //----------------------------------------------------------------------------------------           
         //Huesped persona = new Huesped(2, 42862742, "Or", "Fornas", "orlandofornas@gmail.com", "Reconquista", "2615970271", true);
         
