@@ -28,10 +28,11 @@ public class TipoHabitacionData {
 
     public void guardarTipoHabitacion(TipoHabitacion tHabitacion) {
         String sql = "INSERT INTO tipohabitacion(codigo, cantMaxPersonas, CantCamas, TipoDeCamas, Precio, estado)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                + " VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
             ps.setString(1, tHabitacion.getCodigo());
             ps.setInt(2, tHabitacion.getCantMaxPersonas());
             ps.setInt(3, tHabitacion.getCantCamas());
@@ -55,9 +56,11 @@ public class TipoHabitacionData {
     public void modificarTipoHabitacion(TipoHabitacion tHabitacion) {
         String sql = "UPDATE tipohabitacion SET codigo = ? ,cantMaxPersonas = ?, CantCamas = ?, "
                 + "TipoDeCamas = ?, Precio = ? ,estado = ? WHERE idTipoHabitacion = ? ";
+        
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
+            
             
             ps.setString(1, tHabitacion.getCodigo());
             ps.setInt(2, tHabitacion.getCantMaxPersonas());
@@ -71,7 +74,7 @@ public class TipoHabitacionData {
             ResultSet rs = ps.getGeneratedKeys();
 
             if (exito > 0) {
-                //tHabitacion.setIdTipoHabitacion(rs.getInt(1));
+                tHabitacion.setIdTipoHabitacion(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, " Tipo de habitacion modificada con exito.");
             } else {
                 JOptionPane.showMessageDialog(null, "El tipo de habitacion buscada no existe");
@@ -79,7 +82,7 @@ public class TipoHabitacionData {
 
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la Tabla TipoHabitacion");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la blablablabla Tabla TipoHabitacion");
         }
 
     }
