@@ -515,8 +515,9 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
     private void jBasignarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBasignarReservaActionPerformed
         // TODO add your handling code here:
-        
-        
+
+        borrarFilaTabla();
+        cargaDatosInscriptos();
     }//GEN-LAST:event_jBasignarReservaActionPerformed
 
 
