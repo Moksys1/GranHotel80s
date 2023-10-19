@@ -1,26 +1,65 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package granhotel80s.vistas;
 
 import granhotel80s.accesoADatos.HuespedData;
 import granhotel80s.entidades.Huesped;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Moksys
- */
 public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
     private HuespedData huespedData;
     private static boolean confirmado = false;
+    private List<Huesped> listaHuesped;
+    private DefaultTableModel modelo;
+    private HuespedData huesData;
+    private List<Huesped> verHuespedes;
+    private Huesped buscarHues;
 
     public RegistroHuespedes() {
         initComponents();
         huespedData = new HuespedData();
+        listaHuesped = huespedData.listarHuesped();
+        modelo = new DefaultTableModel();
+        modelo = (DefaultTableModel) jTablehuespedes.getModel();
+
+        armarCabeceraTabla();
+        cargaDatosInscriptos();
+    }
+
+    private void cargaHuespedes(Huesped hues) {
+        HuespedData verHuesped = new HuespedData();
+//      System.out.println((String)hues.toString());
+        modelo.addRow(new Object[]{hues.getDni(), hues.getApellido(), hues.getNombre(), hues.getTelefono(), hues.isEstado()});
+
+    }
+
+    private void armarCabeceraTabla() {
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("DNI");
+        filaCabecera.add("Apellido");
+        filaCabecera.add("Nombre");
+        filaCabecera.add("Telefono");
+        filaCabecera.add("Estado");
+        for (Object it : filaCabecera) {
+            modelo.addColumn(it);
+        }
+        jTablehuespedes.setModel(modelo);
+    }
+
+    private void borrarFilaTabla() {
+        int indice = modelo.getRowCount() - 1;
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private void cargaDatosInscriptos() {
+        borrarFilaTabla();
+        for (Huesped h : listaHuesped) {
+            modelo.addRow(new Object[]{h.getDni(), h.getApellido(), h.getNombre(), h.getTelefono(), h.isEstado()});
+        }
     }
 
     /**
@@ -54,12 +93,12 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         jCheckBoxActivo = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTablehuespedes = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jTFbuscaHuepedXDni = new javax.swing.JTextField();
+        jBreservaBuscar = new javax.swing.JButton();
+        jBasignarReserva = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
 
         setTitle("Registro de Huespedes");
@@ -113,7 +152,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
         jTelefono.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jBBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jBBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jBBuscar.setText("Buscar Huesped");
         jBBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +160,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
             }
         });
 
-        jBGuardarNuevo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jBGuardarNuevo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jBGuardarNuevo.setText("Guardar Nuevo");
         jBGuardarNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +168,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
             }
         });
 
-        jBEliminar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jBEliminar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jBEliminar.setText("Eliminar");
         jBEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,7 +176,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
             }
         });
 
-        jBActualizar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jBActualizar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jBActualizar.setText("Actualizar");
         jBActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,8 +273,8 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 153));
 
-        jTable1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTablehuespedes.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTablehuespedes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -246,7 +285,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTablehuespedes);
 
         jLabel10.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
@@ -257,13 +296,23 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Inserte DNI del Huesped a buscar:");
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTFbuscaHuepedXDni.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton2.setText("Buscar");
+        jBreservaBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jBreservaBuscar.setText("Buscar");
+        jBreservaBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBreservaBuscarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jButton3.setText("Asignar reserva");
+        jBasignarReserva.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jBasignarReserva.setText("Asignar Reserva");
+        jBasignarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBasignarReservaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -272,16 +321,16 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addComponent(jBasignarReserva)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField1))
+                                .addComponent(jTFbuscaHuepedXDni))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2))
+                            .addComponent(jBreservaBuscar))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -293,16 +342,16 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jTFbuscaHuepedXDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBreservaBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
-                .addComponent(jButton3)
+                .addComponent(jBasignarReserva)
                 .addGap(68, 68, 68))
         );
 
-        jBSalir.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jBSalir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jBSalir.setText("Salir");
         jBSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,15 +386,13 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+//----------------------------------------------------------------------------------------------------------------------
+//    Pestaña Huespedes
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        // TODO add your handling code here:
-
         this.dispose();
     }//GEN-LAST:event_jBSalirActionPerformed
 
     private void jBGuardarNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarNuevoActionPerformed
-        // TODO add your handling code here:
-
         try {
             Huesped persona = new Huesped();
 
@@ -373,8 +420,6 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBGuardarNuevoActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        // TODO add your handling code here:
-
         try {
             Huesped buscarHues = huespedData.BuscarHuespedPorDni(Integer.parseInt(jTDni.getText()));
 
@@ -391,11 +436,9 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         } catch (NullPointerException ex) {
             JOptionPane.showMessageDialog(null, "No existe este huesped.");
         }
-
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
-        // TODO add your handling code here:
         try {
             Huesped persona = huespedData.BuscarHuespedPorDni(Integer.parseInt(jTDni.getText()));
             persona.setDni(Integer.parseInt(jTDni.getText()));
@@ -422,8 +465,6 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBActualizarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-        // TODO add your handling code here:
-
         try {
             int dni = Integer.parseInt(jTDni.getText());
             Huesped EliminarPersona = huespedData.BuscarHuespedPorDni(dni);
@@ -448,6 +489,36 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         jCheckBoxActivo.setSelected(false);
     }//GEN-LAST:event_jBEliminarActionPerformed
 
+//-------------------------------------------------------------------------------------------------------
+//    Pestaña Busqueda de reserva
+
+    private void jBreservaBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBreservaBuscarActionPerformed
+        try {
+            buscarHues = huespedData.BuscarHuespedPorDni(Integer.parseInt(jTFbuscaHuepedXDni.getText()));
+            if (buscarHues != null) {
+                borrarFilaTabla();
+                cargaHuespedes(buscarHues);
+            } else {
+                borrarFilaTabla();
+                cargaDatosInscriptos();
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "No ha ingresado ningun DNI a buscar.");
+            borrarFilaTabla();
+            cargaDatosInscriptos();
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "No existe este huesped.");
+        }
+        jTFbuscaHuepedXDni.setText("");
+    }//GEN-LAST:event_jBreservaBuscarActionPerformed
+
+    private void jBasignarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBasignarReservaActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jBasignarReservaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBActualizar;
@@ -455,8 +526,8 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBGuardarNuevo;
     private javax.swing.JButton jBSalir;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jBasignarReserva;
+    private javax.swing.JButton jBreservaBuscar;
     private javax.swing.JCheckBox jCheckBoxActivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -475,9 +546,9 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTDni;
     private javax.swing.JTextField jTDomicilio;
     private javax.swing.JTextField jTEmail;
+    private javax.swing.JTextField jTFbuscaHuepedXDni;
     private javax.swing.JTextField jTNombre;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTablehuespedes;
     private javax.swing.JTextField jTelefono;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
