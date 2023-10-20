@@ -98,7 +98,7 @@ public class TipoHabitacion {
 
     @Override
     public String toString() {
-        return "" + "" + idTipoHabitacion + "," + codigo + "," + cantMaxPersonas + "," + CantCamas + "," + TipoDeCamas + "," + Precio + "," + estado + '}';
+        return "" + "" + codigo + "," + cantMaxPersonas + "," + CantCamas + "," + TipoDeCamas +  '}';
     }
     
 }

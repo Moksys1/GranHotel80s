@@ -191,12 +191,13 @@ public class TipoHabitacionData {
             while (rs.next()) {
 
                 TipoHabitacion tipohab = new TipoHabitacion();
-                tipohab.setIdTipoHabitacion(rs.getInt("idHabitacion"));
+                tipohab.setIdTipoHabitacion(rs.getInt("idTipoHabitacion"));
                 tipohab.setCodigo(rs.getString("codigo"));
-                tipohab.setCantMaxPersonas(rs.getInt("cantidad de personas"));
-                tipohab.setCantCamas(rs.getInt("cantidad de camaas"));
-                tipohab.setTipoDeCamas(rs.getString("Tipo de cama "));
-                tipohab.setPrecio(rs.getDouble("precio "));
+                tipohab.setCantMaxPersonas(rs.getInt("cantMaxPersonas"));
+                tipohab.setCantCamas(rs.getInt("CantCamas"));
+                tipohab.setTipoDeCamas(rs.getString("TipoDeCamas"));
+                tipohab.setPrecio(rs.getDouble("Precio"));
+                tipohab.setEstado(rs.getBoolean("estado"));
                 listarTipoH.add(tipohab);
 
             }
