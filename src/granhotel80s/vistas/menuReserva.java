@@ -10,9 +10,11 @@ import static granhotel80s.accesoADatos.Conexion.conexion;
 import granhotel80s.accesoADatos.HabitacionData;
 import granhotel80s.accesoADatos.HuespedData;
 import granhotel80s.accesoADatos.ReservaData;
+import granhotel80s.accesoADatos.TipoHabitacionData;
 import granhotel80s.entidades.Habitacion;
 import granhotel80s.entidades.Huesped;
 import granhotel80s.entidades.Reserva;
+import granhotel80s.entidades.TipoHabitacion;
 import java.awt.Dimension;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -32,9 +34,13 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private HabitacionData habData;
     private ReservaData reData;
     private List<Habitacion> listaH;
+    private List<TipoHabitacion> listaTH;
+    private TipoHabitacionData tipoHdata;
+    private TipoHabitacion tipoH;
     private Huesped hue;
     public menuReserva() {
         initComponents();
+        tipoHdata=new TipoHabitacionData();
         huData=new HuespedData();
         habData=new HabitacionData();
         reData =new ReservaData ();
@@ -42,14 +48,16 @@ public class menuReserva extends javax.swing.JInternalFrame {
 
         modelo = (DefaultTableModel) jTreserva.getModel();
         listaH = habData.obtenerHabitacionesDesopupadas();
+        listaTH=tipoHdata.listarTipoHabitacion();
         armarCabeceraDeLaTabla();
-//       modelo.setRowCount(0);
-         
-
+        cargarHabitaciones();
+     }
+    private void cargarHabitaciones() {
         
-    
+        for (TipoHabitacion item : listaTH) {
+            jCtipoH.addItem(item);
+        }
     }
-
     
     
    
@@ -147,7 +155,6 @@ public class menuReserva extends javax.swing.JInternalFrame {
             }
         });
 
-        jCtipoH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jCtipoH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCtipoHActionPerformed(evt);
@@ -219,8 +226,8 @@ public class menuReserva extends javax.swing.JInternalFrame {
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addComponent(jDfechaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -361,7 +368,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -443,7 +450,17 @@ public class menuReserva extends javax.swing.JInternalFrame {
           
 
     }//GEN-LAST:event_jBbuscarActionPerformed
-
+//  private void cargaDatosInsriptos() {
+//      borrarFilasTabla();
+//        aluData = new InscripcionData();
+//        Materia selec = (Materia) jCBMateria.getSelectedItem();
+//        listaAlum = aluData.obtenerAlumnosPorMateria(selec.getIdMateria());
+//        for (Alumno a : listaAlum) {
+//            modelo.addRow(new Object[]{a.getIdAlumno(), a.getDni(), a.getApellido(), a.getNombre()});
+//        }
+//    }
+  
+    
     private void TfCantidadPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfCantidadPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TfCantidadPActionPerformed
@@ -459,7 +476,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonReservar;
     private javax.swing.JCheckBox jCbEstado;
-    private javax.swing.JComboBox<String> jCtipoH;
+    private javax.swing.JComboBox<TipoHabitacion> jCtipoH;
     private com.toedter.calendar.JDateChooser jDfechaE;
     private com.toedter.calendar.JDateChooser jDfechaS;
     private javax.swing.JLabel jLabel1;

@@ -6,12 +6,15 @@
 package granhotel80s.accesoADatos;
 
 import com.sun.org.apache.xerces.internal.util.FeatureState;
+import granhotel80s.entidades.Habitacion;
 import granhotel80s.entidades.TipoHabitacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -175,5 +178,34 @@ public class TipoHabitacionData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la Tabla TipoHabitacion");
         }
+    }
+     public List<TipoHabitacion> listarTipoHabitacion() {
+
+        ArrayList<TipoHabitacion> listarTipoH = new ArrayList<>();
+
+        String sql = "SELECT * FROM tipohabitacion";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                TipoHabitacion tipohab = new TipoHabitacion();
+                tipohab.setIdTipoHabitacion(rs.getInt("idHabitacion"));
+                tipohab.setCodigo(rs.getString("codigo"));
+                tipohab.setCantMaxPersonas(rs.getInt("cantidad de personas"));
+                tipohab.setCantCamas(rs.getInt("cantidad de camaas"));
+                tipohab.setTipoDeCamas(rs.getString("Tipo de cama "));
+                tipohab.setPrecio(rs.getDouble("precio "));
+                listarTipoH.add(tipohab);
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla tipo habitacion.");
+        }
+
+        return listarTipoH;
+
     }
 }
