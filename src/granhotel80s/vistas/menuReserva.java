@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package granhotel80s.vistas;
 
 import com.toedter.calendar.JDateChooser;
@@ -20,15 +16,22 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.concurrent.TimeUnit.DAYS;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class menuReserva extends javax.swing.JInternalFrame {
-
+    private LocalDate fechaEE;
+    private LocalDate fechaSS;
+    private Date fechae1;
+    private Date fechas1;
     private DefaultTableModel modelo;
     private HuespedData huData;
     private HabitacionData habData;
@@ -38,6 +41,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private TipoHabitacionData tipoHdata;
     private TipoHabitacion tipoH;
     private Huesped hue;
+    
     public menuReserva() {
         initComponents();
         tipoHdata=new TipoHabitacionData();
@@ -59,8 +63,6 @@ public class menuReserva extends javax.swing.JInternalFrame {
         }
     }
     
-    
-   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -189,7 +191,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jDfechaE, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDfechaE, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addGap(23, 23, 23)
                                         .addComponent(jLabel2))
@@ -416,17 +418,35 @@ public class menuReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
-
+       
         borrarFilasTabla();
         try {
+            JDateChooser jDfechaEChooser = new JDateChooser();
+            JDateChooser jDfechaSChooser = new JDateChooser();
+               
+                Date jDfechaEDate = (Date) jDfechaEChooser.getDate();
+                Date jDfechaSDate = (Date) jDfechaSChooser.getDate();
+
+
+                if (jDfechaEDate != null && jDfechaSDate != null) {
+                    LocalDate jDfechaE = jDfechaEDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate jDfechaS = jDfechaSDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    
+                    long diasReserva = jDfechaE.until(jDfechaS, ChronoUnit.DAYS);
+                   JOptionPane.showMessageDialog(null,"La diferencia en días es: " + diasReserva);
+                } else {
+                    JOptionPane.showMessageDialog(null,"Por favor, seleccione ambas fechas.");
+                }
             
-        
+    
         String cantidadP = TfCantidadP.getText();
         int numIng = Integer.parseInt(cantidadP);
         String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
         String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
+        
 //        if (fechae.isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "la fecha esta ");
+//            JOptionPane.showMessageDialog(null, "la fecha esta " + fechae);
+
 //        }
         if (TfCantidadP != null ) {
             for (Habitacion habitacion : listaH) {
@@ -438,7 +458,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
                     habitacion.getPiso(),
                     habitacion.getNroHabitacion()
                 });
-                JOptionPane.showMessageDialog(null,""+numIng+fechae+fechas);
+//                JOptionPane.showMessageDialog(null,""+numIng+fechae+fechas);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Completar todos los campos ");
