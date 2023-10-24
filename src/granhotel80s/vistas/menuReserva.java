@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,8 +114,10 @@ public class menuReserva extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cantidad de personas ");
 
+        jDfechaS.setDateFormatString("dd-MM-yyyy");
         jDfechaS.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
+        jDfechaE.setDateFormatString("dd-MM-yyyy");
         jDfechaE.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
@@ -420,34 +424,29 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
        
         borrarFilasTabla();
-        try {
-            JDateChooser jDfechaEChooser = new JDateChooser();
-            JDateChooser jDfechaSChooser = new JDateChooser();
-               
-                Date jDfechaEDate = (Date) jDfechaEChooser.getDate();
-                Date jDfechaSDate = (Date) jDfechaSChooser.getDate();
-
-
-                if (jDfechaEDate != null && jDfechaSDate != null) {
-                    LocalDate jDfechaE = jDfechaEDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    LocalDate jDfechaS = jDfechaSDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    
-                    long diasReserva = jDfechaE.until(jDfechaS, ChronoUnit.DAYS);
-                   JOptionPane.showMessageDialog(null,"La diferencia en días es: " + diasReserva);
-                } else {
-                    JOptionPane.showMessageDialog(null,"Por favor, seleccione ambas fechas.");
-                }
-            
-    
-        String cantidadP = TfCantidadP.getText();
-        int numIng = Integer.parseInt(cantidadP);
-        String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
-        String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
         
-//        if (fechae.isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "la fecha esta " + fechae);
+        try {
+            String cantidadP = TfCantidadP.getText();
+            int numIng = Integer.parseInt(cantidadP);
+            String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
+            String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
 
-//        }
+            if (fechae != null && fechas != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate jDfechaE = LocalDate.parse(fechae, formatter);
+                LocalDate jDfechaS = LocalDate.parse(fechas, formatter);
+
+                long diasReserva = jDfechaE.until(jDfechaS, ChronoUnit.DAYS);
+                JOptionPane.showMessageDialog(null, "La diferencia en días es: " + diasReserva);
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione ambas fechas.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Cantidad de personas no válidas.");
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null, "Error en el formato de fecha.");
+        }
+    
         if (TfCantidadP != null ) {
             for (Habitacion habitacion : listaH) {
                
@@ -458,27 +457,16 @@ public class menuReserva extends javax.swing.JInternalFrame {
                     habitacion.getPiso(),
                     habitacion.getNroHabitacion()
                 });
-//                JOptionPane.showMessageDialog(null,""+numIng+fechae+fechas);
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Completar todos los campos ");
         }
             
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null,"n candiad de personas debes ingresar un numero");
-        }
-          
+
 
     }//GEN-LAST:event_jBbuscarActionPerformed
-//  private void cargaDatosInsriptos() {
-//      borrarFilasTabla();
-//        aluData = new InscripcionData();
-//        Materia selec = (Materia) jCBMateria.getSelectedItem();
-//        listaAlum = aluData.obtenerAlumnosPorMateria(selec.getIdMateria());
-//        for (Alumno a : listaAlum) {
-//            modelo.addRow(new Object[]{a.getIdAlumno(), a.getDni(), a.getApellido(), a.getNombre()});
-//        }
-//    }
+
   
     
     private void TfCantidadPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfCantidadPActionPerformed

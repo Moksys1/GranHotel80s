@@ -207,6 +207,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jDfechaS">
           <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="0"/>
             </Property>
@@ -214,6 +215,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jDfechaE">
           <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="0"/>
             </Property>
