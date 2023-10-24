@@ -120,18 +120,21 @@ public class HabitacionData {
 
     }
     
-    public List<Habitacion> obtenerHabitacionesDesopupadas() {
+    public List<Habitacion> obtenerHabitacionesDesocupadas(String cat) {
 
         ArrayList<Habitacion> habitDesocupadas = new ArrayList<>();
 
-        String sql = "SELECT * FROM habitacion WHERE estado = 1 ";
+        String sql = "SELECT * FROM habitacion WHERE estado = 1 AND categoria = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, cat);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
                 Habitacion habi = new Habitacion();
+                
+                
                 habi.setIdHabitacion(rs.getInt("idHabitacion"));
                 habi.setIdTipoHabitacion(rs.getInt("idTipoHabitacion"));
                 habi.setCategoria(rs.getString("categoria"));
