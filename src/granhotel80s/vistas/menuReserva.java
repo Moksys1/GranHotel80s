@@ -54,16 +54,33 @@ public class menuReserva extends javax.swing.JInternalFrame {
 
         modelo = (DefaultTableModel) jTreserva.getModel();
         listaH = habData.obtenerHabitacionesDesopupadas();
-        listaTH=tipoHdata.listarTipoHabitacion();
+        listaH=habData.obtenerHabitaciones();
         armarCabeceraDeLaTabla();
         cargarHabitaciones();
      }
+//    String tipoSeleccionado = (String) jCtipoH.getSelectedItem(); // Obtiene el tipo de habitación seleccionado
+//
+//for (TipoDeHabitacion tipo : Menu.listaTiposDeHabitacion) {
+//    if (tipo.getNombre().equals(tipoSeleccionado)) {
+//        modelo.addRow(new Object[]{
+//            tipo.getCodigo(),
+//            tipo.getDescripcion(),
+//            tipo.getPrecio(),
+//            tipo.getDisponibilidad()
+//        });
+//    }
+//}
     private void cargarHabitaciones() {
-        
-        for (TipoHabitacion item : listaTH) {
-            jCtipoH.addItem(item);
+       
+        for (Habitacion hab : listaH) {
+      
+            jCtipoH.addItem(hab);
         }
     }
+//    for (Habitacion hab : listaH) {
+//        TipoHabitacion tipo = hab.getTipoHabitacion(); // Supongo que existe un método para obtener el tipo de habitación desde la habitación
+//        model.addElement(tipo);
+//    }
     
 
     @SuppressWarnings("unchecked")
@@ -468,7 +485,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonReservar;
-    private javax.swing.JComboBox<TipoHabitacion> jCtipoH;
+    private javax.swing.JComboBox<Habitacion> jCtipoH;
     private com.toedter.calendar.JDateChooser jDfechaE;
     private com.toedter.calendar.JDateChooser jDfechaS;
     private javax.swing.JLabel jLabel1;

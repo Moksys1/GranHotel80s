@@ -79,7 +79,7 @@ public class Habitacion {
 
     @Override
     public String toString() {
-        return "" + "" + idHabitacion + "," + idTipoHabitacion + "," + categoria + "," + Piso + "," + nroHabitacion + "," + estado + '}';
+        return  categoria ;
     }
 
 }
