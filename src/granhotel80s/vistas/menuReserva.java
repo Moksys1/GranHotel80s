@@ -53,7 +53,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
         
 
         modelo = (DefaultTableModel) jTreserva.getModel();
-        listaH = habData.obtenerHabitacionesDesopupadas();
+        listaH = habData.obtenerHabitacionesDesocupadas("Suite Lujo");
         listaH=habData.obtenerHabitaciones();
         armarCabeceraDeLaTabla();
         cargarHabitaciones();
