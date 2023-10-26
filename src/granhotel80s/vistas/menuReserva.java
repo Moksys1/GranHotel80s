@@ -60,7 +60,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
         habData = new HabitacionData();
         reData = new ReservaData();
         modelo = (DefaultTableModel) jTreserva.getModel();
-        listaH = habData.obtenerHabitacionesDesocupadas("Suite Lujo");
+        listaH = habData.obtenerHabitacionesDesocupadas("SuiteLujo");
         listaH = habData.obtenerHabitaciones();
 
         // Con esto le doy formato dia, mes, año a la fecha
@@ -458,25 +458,84 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
          
             
-        Calendar fechaIn = Calendar.getInstance();
-        Calendar fechaOut = Calendar.getInstance();
-//        String tipoHCB = (String) jCtipoH.getSelectedItem();
-//        listaH = habData.obtenerHabitacionesDesocupadas(tipoHCB);
+//        Calendar fechaIn = Calendar.getInstance();
+//        Calendar fechaOut = Calendar.getInstance();
+////        String tipoHCB = (String) jCtipoH.getSelectedItem();
+////        listaH = habData.obtenerHabitacionesDesocupadas(tipoHCB);
+//        borrarFilasTabla();
+//
+//        try {
+//
+//            String cantidadP = TfCantidadP.getText();
+//            cantP=cantidadP;
+//            String selTipoH = jCtipoH.getSelectedItem().toString();
+//            int numIng = Integer.parseInt(cantidadP);
+//            fechaIn = jDfechaE.getCalendar();
+//            fechaOut = jDfechaS.getCalendar();
+//           
+//
+//            if (cantidadP != "" && selTipoH != "" && fechaIn != null && fechaOut != null) {
+//
+//                for (Habitacion habitacion : listaH) {
+//                    modelo.addRow(new Object[]{
+//                        habitacion.getIdHabitacion(),
+//                        habitacion.getIdTipoHabitacion(),
+//                        habitacion.getCategoria(),
+//                        habitacion.getPiso(),
+//                        habitacion.getNroHabitacion()
+//                    });
+//                }
+//               // System.out.println("cantidadP" + " " + "selTipoH" + " " + "fechae" + " " + "fechas");
+//                //System.out.println(cantidadP + " " + selTipoH + " " + fechaIn + " " + fechaOut);
+////====================================================================================================
+////  ====================================== Calculo de dias =========================================
+////====================================================================================================
+//                if (fechaIn.getTimeInMillis() < fechaOut.getTimeInMillis()) {
+//
+//                    long startTime = fechaIn.getTimeInMillis();
+//                    long endTime = fechaOut.getTimeInMillis();
+//                    long diasDesde = (long) Math.floor(startTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora 
+//                    long diasHasta = (long) Math.floor(endTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora
+//                    long diaDif = diasHasta - diasDesde;
+//                    diasR=diaDif;
+//                    SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); 
+//
+//
+//                    String fecha1 = formato.format(fechaIn.getTime());
+//                    String fecha2 = formato.format(fechaOut.getTime());
+//                  
+//                    
+//                    JOptionPane.showMessageDialog(null, "Cantidad de dias: " + diaDif);
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "La fecha de salida NO puede ser anterior a la de ingreso");
+//                }
+////==================================================================================================== 
+//
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Por favor completar todos los campos ");
+//            }
+//
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(null, "Cantidad de personas no válidas.");
+//        } catch (DateTimeParseException e) {
+//            JOptionPane.showMessageDialog(null, "Error en el formato de fecha/\"Por favor, seleccione ambas fechas.\"");
+//
+//        }
+        
         borrarFilasTabla();
-
+        
         try {
-
+             
             String cantidadP = TfCantidadP.getText();
             cantP=cantidadP;
-            String selTipoH = jCtipoH.getSelectedItem().toString();
             int numIng = Integer.parseInt(cantidadP);
-            fechaIn = jDfechaE.getCalendar();
-            fechaOut = jDfechaS.getCalendar();
-           
-
-            if (cantidadP != "" && selTipoH != "" && fechaIn != null && fechaOut != null) {
-
+            String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
+            String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
+            fecha1=fechae;
+            fecha2=fechas;
+            if (TfCantidadP != null && fechae != "" && fechas != "") {
                 for (Habitacion habitacion : listaH) {
+
                     modelo.addRow(new Object[]{
                         habitacion.getIdHabitacion(),
                         habitacion.getIdTipoHabitacion(),
@@ -484,91 +543,32 @@ public class menuReserva extends javax.swing.JInternalFrame {
                         habitacion.getPiso(),
                         habitacion.getNroHabitacion()
                     });
+
                 }
-               // System.out.println("cantidadP" + " " + "selTipoH" + " " + "fechae" + " " + "fechas");
-                //System.out.println(cantidadP + " " + selTipoH + " " + fechaIn + " " + fechaOut);
-//====================================================================================================
-//  ====================================== Calculo de dias =========================================
-//====================================================================================================
-                if (fechaIn.getTimeInMillis() < fechaOut.getTimeInMillis()) {
-
-                    long startTime = fechaIn.getTimeInMillis();
-                    long endTime = fechaOut.getTimeInMillis();
-                    long diasDesde = (long) Math.floor(startTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora 
-                    long diasHasta = (long) Math.floor(endTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora
-                    long diaDif = diasHasta - diasDesde;
-                    diasR=diaDif;
-                    SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); 
-
-
-                    String fecha1 = formato.format(fechaIn.getTime());
-                    String fecha2 = formato.format(fechaOut.getTime());
-                  
-                    
-                    JOptionPane.showMessageDialog(null, "Cantidad de dias: " + diaDif);
-                } else {
-                    JOptionPane.showMessageDialog(null, "La fecha de salida NO puede ser anterior a la de ingreso");
-                }
-//==================================================================================================== 
-
             } else {
-                JOptionPane.showMessageDialog(null, "Por favor completar todos los campos ");
+                JOptionPane.showMessageDialog(null, "Completar todos los campos ");
             }
-
+            
+            if (fechae != null && fechas != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate jDfechaE = LocalDate.parse(fechae, formatter);
+                LocalDate jDfechaS = LocalDate.parse(fechas, formatter);
+               
+                long diasReserva = jDfechaE.until(jDfechaS, ChronoUnit.DAYS);
+                diasR=diasReserva;
+//              
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione ambas fechas.");
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Cantidad de personas no válidas.");
         } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(null, "Error en el formato de fecha/\"Por favor, seleccione ambas fechas.\"");
-
         }
-        
-////        borrarFilasTabla();
-////        
-////        try {
-////             
-////            String cantidadP = TfCantidadP.getText();
-////           
-////            int numIng = Integer.parseInt(cantidadP);
-////            String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
-////            String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
-////            fecha1=fechae;
-////            fecha2=fechas;
-////            if (TfCantidadP != null && fechae != "" && fechas != "") {
-////                for (Habitacion habitacion : listaH) {
-////
-////                    modelo.addRow(new Object[]{
-////                        habitacion.getIdHabitacion(),
-////                        habitacion.getIdTipoHabitacion(),
-////                        habitacion.getCategoria(),
-////                        habitacion.getPiso(),
-////                        habitacion.getNroHabitacion()
-////                    });
-////
-////                }
-////            } else {
-////                JOptionPane.showMessageDialog(null, "Completar todos los campos ");
-////            }
-////            
-////            if (fechae != null && fechas != null) {
-////                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-////                LocalDate jDfechaE = LocalDate.parse(fechae, formatter);
-////                LocalDate jDfechaS = LocalDate.parse(fechas, formatter);
-////               
-////                long diasReserva = jDfechaE.until(jDfechaS, ChronoUnit.DAYS);
-////                diasR=diasReserva;
-//////              
-////            } else {
-////                JOptionPane.showMessageDialog(null, "Por favor, seleccione ambas fechas.");
-////            }
-////        } catch (NumberFormatException e) {
-////            JOptionPane.showMessageDialog(null, "Cantidad de personas no válidas.");
-////        } catch (DateTimeParseException e) {
-////            JOptionPane.showMessageDialog(null, "Error en el formato de fecha/\"Por favor, seleccione ambas fechas.\"");
-////        }
-//           JComboBox<String> jCtipoH = new JComboBox<>();
-//
-//
-//           String tipoHabS = (String) jCtipoH.getSelectedItem();
+           JComboBox<String> jCtipoH = new JComboBox<>();
+
+
+           String tipoHabS = (String) jCtipoH.getSelectedItem();
 
     }//GEN-LAST:event_jBbuscarActionPerformed
 
