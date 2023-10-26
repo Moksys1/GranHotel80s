@@ -5,17 +5,48 @@
  */
 package granhotel80s.vistas;
 
+import granhotel80s.accesoADatos.Conexion;
+import granhotel80s.accesoADatos.HabitacionData;
+import granhotel80s.accesoADatos.HuespedData;
+import granhotel80s.accesoADatos.ReservaData;
+import granhotel80s.entidades.Huesped;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Moksys
  */
 public class BusquedaReservacion extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form BusquedaReservacion
-     */
+    private DefaultTableModel modelo = new DefaultTableModel();
+
+    private HuespedData huesData;
+    private ReservaData resData;
+    private HabitacionData habiData;
+    private List<Object[]> ReservasHuesped;
+    private LocalDate nuevaFecha;
+    private int idReserva;
+    private Huesped buscarHues;
+
     public BusquedaReservacion() {
         initComponents();
+
+        huesData = new HuespedData();
+        resData = new ReservaData();
+        habiData = new HabitacionData();
+
+        armarCabeceraTabla();
+        cargaDatosReserva();
+
     }
 
     /**
@@ -30,13 +61,13 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        jTDNIhuesped = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jBModificarReserva = new javax.swing.JButton();
+        jBCancelarReserva = new javax.swing.JButton();
+        jBActualizarTabla = new javax.swing.JButton();
 
         setTitle("Busqueda de Reservacion\n");
 
@@ -49,32 +80,30 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabel2.setText("Ingrese DNI de Husped");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jButton1.setText("Buscar Reserva");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jTable1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTable1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jTable1.setFont(new java.awt.Font("Lucida Console", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Numero de Reserva", "Fecha de Entrada", "Fecha de Salida", "Cantidad de Personas", "Tipo de Habitacion"
+                "Reserva", "Dni del cliente", "Entrada", "Salida", "Habitacion", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        jTDNIhuesped.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTDNIhuesped.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTDNIhuespedKeyReleased(evt);
             }
         });
 
@@ -86,56 +115,75 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jButton3.setText("Modificar Reserva");
+        jBModificarReserva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jBModificarReserva.setText("Modificar Reserva");
+        jBModificarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBModificarReservaActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jButton4.setText("Cancerlar Reserva");
+        jBCancelarReserva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jBCancelarReserva.setText("Cambiar Estado");
+        jBCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCancelarReservaActionPerformed(evt);
+            }
+        });
+
+        jBActualizarTabla.setText("Actualizar tabla");
+        jBActualizarTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBActualizarTablaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(199, 199, 199)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
-                .addContainerGap(49, Short.MAX_VALUE))
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(237, 237, 237)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jTDNIhuesped, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jBModificarReserva)
+                                .addGap(76, 76, 76)
+                                .addComponent(jBActualizarTabla)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBCancelarReserva))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(jButton2)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(34, 34, 34)
+                .addComponent(jTDNIhuesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                    .addComponent(jBCancelarReserva)
+                    .addComponent(jBModificarReserva)
+                    .addComponent(jBActualizarTabla))
+                .addGap(60, 60, 60)
                 .addComponent(jButton2)
-                .addGap(22, 22, 22))
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,30 +200,128 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jTDNIhuespedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTDNIhuespedKeyReleased
+
+        filtrarHuespedConElDni();
+
+    }//GEN-LAST:event_jTDNIhuespedKeyReleased
+
+    private void jBCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarReservaActionPerformed
+
+        int filaSeleccionada = jTable1.getSelectedRow();
+        if (filaSeleccionada != -1) {
+
+            int idReserva = (Integer) modelo.getValueAt(filaSeleccionada, 0);
+
+            resData.cambiarEstadoReserva(idReserva);
+
+            JOptionPane.showMessageDialog(null, "Cambio de reserva con exito.");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
+        }
+    }//GEN-LAST:event_jBCancelarReservaActionPerformed
+
+    private void jBModificarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarReservaActionPerformed
+        try {
+            cambioDeFecha();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Seleccione la columna correcta para modificar la fecha..");
+        }
+
+    }//GEN-LAST:event_jBModificarReservaActionPerformed
+
+    private void jBActualizarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarTablaActionPerformed
+        // TODO add your handling code here:
+        borrarFilasTabla();
+        cargaDatosReserva();
+    }//GEN-LAST:event_jBActualizarTablaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBActualizarTabla;
+    private javax.swing.JButton jBCancelarReserva;
+    private javax.swing.JButton jBModificarReserva;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTDNIhuesped;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    private void armarCabeceraTabla() {
+        modelo.addColumn("Reserva");
+        modelo.addColumn("Dni del cliente");
+        modelo.addColumn("Entrada");
+        modelo.addColumn("Salida");
+        modelo.addColumn("Habitacion");
+        modelo.addColumn("Estado");
+
+        jTable1.setModel(modelo);
+    }
+
+    public void borrarFilasTabla() {
+
+        if (modelo != null) {
+            int a = modelo.getRowCount() - 1;
+
+            if (modelo.getRowCount() > 0) {
+                for (int i = a; i >= 0; i--) {
+                    modelo.removeRow(i);
+                }
+            }
+        }
+    }
+
+    private void filtrarHuespedConElDni() {
+
+        
+            String dni = jTDNIhuesped.getText();
+           
+            modelo.setRowCount(0);
+
+            // Filtrar las reservas por el DNI
+            ArrayList<Object[]> lista = resData.filtrarHuespedPorDni(dni);
+
+            // Agregar las filas filtradas al modelo de la tabla
+            for (Object[] fila : lista) {
+                modelo.addRow(fila);
+            }
+            
+    }
+
+    private void cargaDatosReserva() {
+
+        ArrayList<Object[]> lista = (ArrayList) resData.obtenerReservasDelHuesped();
+
+        for (Object[] fila : lista) {
+            modelo.addRow(fila);
+        }
+    }
+
+    public void cambioDeFecha() {
+        int fila = jTable1.getSelectedRow();
+
+        int id = Integer.parseInt(this.jTable1.getValueAt(fila, 0).toString());
+        String fechaString = jTable1.getValueAt(fila, 3).toString();
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date nuevaFecha = new Date(dateFormat.parse(fechaString).getTime());
+            resData.modificarFecha(nuevaFecha, id);
+            JOptionPane.showMessageDialog(null, "Fecha modificada con éxito.");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se puede modificar esta parte..");
+        }
+    }
+
 }

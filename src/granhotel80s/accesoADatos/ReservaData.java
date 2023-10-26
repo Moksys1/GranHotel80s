@@ -10,6 +10,8 @@
 //⮚	Búsqueda de Reservas por huésped o fechas: devuelve una Reserva.
 package granhotel80s.accesoADatos;
 
+import granhotel80s.entidades.Habitacion;
+import granhotel80s.entidades.Huesped;
 import granhotel80s.entidades.Reserva;
 import java.sql.Connection;
 import java.sql.Date;
@@ -17,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -155,7 +158,7 @@ public class ReservaData {
             ex.printStackTrace();
         }
     }
-    
+
     public List<Reserva> listarReservas() {
 
         ArrayList<Reserva> reserva = new ArrayList<>();
@@ -187,4 +190,101 @@ public class ReservaData {
 
     }
     
+    public ArrayList<Object[]> filtrarHuespedPorDni(String dni) {
+        ArrayList<Object[]> listaDeReservasDeHuesped = new ArrayList<>();
+
+        try {
+            String sql = "SELECT reserva.idReserva, huesped.dni, reserva.fechaEntrada, reserva.fechaSalida, habitacion.nroHabitacion, reserva.estado "
+                    + "FROM reserva "
+                    + "JOIN huesped ON reserva.idHuesped = huesped.idHuesped "
+                    + "JOIN habitacion ON reserva.idHabitacion = habitacion.idHabitacion "
+                    + "WHERE huesped.dni LIKE ?";
+            
+            //LIKEse utiliza para buscar un patrón específico dentro de una columna
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            // Agregue el símbolo % para buscar cualquier numero en cualquier posición del dni proporcionado
+            ps.setString(1, "%" + dni + "%"); 
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserva res = new Reserva();
+                Huesped hue = new Huesped();
+                Habitacion habi = new Habitacion();
+
+                res.setIdReserva(rs.getInt("idReserva"));
+                hue.setDni(rs.getInt("dni"));
+                res.setFechaEntrada(rs.getDate("fechaEntrada").toLocalDate());
+                res.setFechaSalida(rs.getDate("fechaSalida").toLocalDate());
+                habi.setNroHabitacion(rs.getInt("nroHabitacion"));
+                res.setEstado(rs.getBoolean("estado"));
+
+                Object[] fila = {res.getIdReserva(), hue.getDni(), res.getFechaEntrada(), res.getFechaSalida(), habi.getNroHabitacion(), res.isEstado()};
+                listaDeReservasDeHuesped.add(fila);
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva. ");
+        }
+
+        return listaDeReservasDeHuesped;
+    }
+
+    public ArrayList<Object[]> obtenerReservasDelHuesped() {
+        ArrayList<Object[]> listaDeReservasDeHuesped = new ArrayList<>();
+
+        try {
+            String sql = "SELECT reserva.idReserva, huesped.dni, reserva.fechaEntrada, reserva.fechaSalida, habitacion.nroHabitacion, reserva.estado "
+                    + "FROM reserva "
+                    + "JOIN huesped ON reserva.idHuesped = huesped.idHuesped "
+                    + "JOIN habitacion ON reserva.idHabitacion = habitacion.idHabitacion;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserva res = new Reserva();
+                Huesped hue = new Huesped();
+                Habitacion habi = new Habitacion();
+
+                res.setIdReserva(rs.getInt("idReserva"));
+                hue.setDni(rs.getInt("dni"));
+                res.setFechaEntrada(rs.getDate("fechaEntrada").toLocalDate());
+                res.setFechaSalida(rs.getDate("fechaSalida").toLocalDate());
+                habi.setNroHabitacion(rs.getInt("nroHabitacion"));
+                res.setEstado(rs.getBoolean("estado"));
+
+                Object[] fila = {res.getIdReserva(), hue.getDni(), res.getFechaEntrada(), res.getFechaSalida(), habi.getNroHabitacion(), res.isEstado()};
+                listaDeReservasDeHuesped.add(fila);
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reservaaaaaaaas. ");
+        }
+
+        return listaDeReservasDeHuesped;
+    }
+
+    public void modificarFecha(Date fechaSalida, int idReserva) {
+        String sql = "UPDATE reserva SET fechaSalida = ? WHERE idReserva = ?;";
+
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+
+            ps.setDate(1, fechaSalida);
+            ps.setInt(2, idReserva);
+
+            int exito = ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva");
+        }
+    }
+
 }
