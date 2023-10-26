@@ -536,7 +536,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         if (filaSeleccionada != -1) {
             Object idHuspedD = jTablehuespedes.getValueAt(filaSeleccionada, 0);
 
-            JOptionPane.showMessageDialog(null, "ID huésped: " + idHuspedD + tipoHabS+"  "+fecha1+"  "+fecha2+"  "+cantP+"  "+diasR+"  "+precioFinal+"  "+ idHab);
+            JOptionPane.showMessageDialog(null, "ID huésped: " + idHuspedD + tipoHabS+"  "+fecha1+"  "+fecha2+"  "+cantP+"  "+precioFinal+"  "+ idHab);
            
    
         } else {

@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
@@ -77,22 +78,22 @@ public class menuReserva extends javax.swing.JInternalFrame {
         armarCabeceraDeLaTabla();
         cargarHabitaciones();
     }
+//
+//    private void cargarHabitaciones() {
+//
+//        jCtipoH.addItem("StdSimple");
+//        jCtipoH.addItem("StdDoble");
+//        jCtipoH.addItem("StdTriple");
+//        jCtipoH.addItem("Suite Lujo");
+//    }
 
     private void cargarHabitaciones() {
-
-        jCtipoH.addItem("StdSimple");
-        jCtipoH.addItem("StdDoble");
-        jCtipoH.addItem("StdTriple");
-        jCtipoH.addItem("Suite Lujo");
+       
+        for (Habitacion hab : listaH) {
+      
+            jCtipoH.addItem(hab);
+        }
     }
-
-//    private void cargarHabitaciones() {
-//       
-//        for (Habitacion hab : listaH) {
-//      
-//            jCtipoH.addItem(hab);
-//        }
-//    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -455,20 +456,23 @@ public class menuReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
-
+         
+            
         Calendar fechaIn = Calendar.getInstance();
         Calendar fechaOut = Calendar.getInstance();
-        String tipoHCB = (String) jCtipoH.getSelectedItem();
-        listaH = habData.obtenerHabitacionesDesocupadas(tipoHCB);
+//        String tipoHCB = (String) jCtipoH.getSelectedItem();
+//        listaH = habData.obtenerHabitacionesDesocupadas(tipoHCB);
         borrarFilasTabla();
 
         try {
 
             String cantidadP = TfCantidadP.getText();
+            cantP=cantidadP;
             String selTipoH = jCtipoH.getSelectedItem().toString();
             int numIng = Integer.parseInt(cantidadP);
             fechaIn = jDfechaE.getCalendar();
             fechaOut = jDfechaS.getCalendar();
+           
 
             if (cantidadP != "" && selTipoH != "" && fechaIn != null && fechaOut != null) {
 
@@ -481,8 +485,8 @@ public class menuReserva extends javax.swing.JInternalFrame {
                         habitacion.getNroHabitacion()
                     });
                 }
-                System.out.println("cantidadP" + " " + "selTipoH" + " " + "fechae" + " " + "fechas");
-                System.out.println(cantidadP + " " + selTipoH + " " + fechaIn + " " + fechaOut);
+               // System.out.println("cantidadP" + " " + "selTipoH" + " " + "fechae" + " " + "fechas");
+                //System.out.println(cantidadP + " " + selTipoH + " " + fechaIn + " " + fechaOut);
 //====================================================================================================
 //  ====================================== Calculo de dias =========================================
 //====================================================================================================
@@ -493,8 +497,14 @@ public class menuReserva extends javax.swing.JInternalFrame {
                     long diasDesde = (long) Math.floor(startTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora 
                     long diasHasta = (long) Math.floor(endTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora
                     long diaDif = diasHasta - diasDesde;
+                    diasR=diaDif;
+                    SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); 
 
-                    //   System.out.println("Cantidad de dias: "+diaDif);
+
+                    String fecha1 = formato.format(fechaIn.getTime());
+                    String fecha2 = formato.format(fechaOut.getTime());
+                  
+                    
                     JOptionPane.showMessageDialog(null, "Cantidad de dias: " + diaDif);
                 } else {
                     JOptionPane.showMessageDialog(null, "La fecha de salida NO puede ser anterior a la de ingreso");
@@ -517,7 +527,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
 ////        try {
 ////             
 ////            String cantidadP = TfCantidadP.getText();
-////            cantP=cantidadP;
+////           
 ////            int numIng = Integer.parseInt(cantidadP);
 ////            String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
 ////            String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
@@ -597,7 +607,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonReservar;
-    private javax.swing.JComboBox<String> jCtipoH;
+    private javax.swing.JComboBox<Habitacion> jCtipoH;
     private com.toedter.calendar.JDateChooser jDfechaE;
     private com.toedter.calendar.JDateChooser jDfechaS;
     private javax.swing.JLabel jLabel1;
