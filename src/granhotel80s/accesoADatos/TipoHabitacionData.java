@@ -106,12 +106,12 @@ public class TipoHabitacionData {
         return tHab;
     }
 
-    public Double buscarPrecioTHab(String codigo) {
+    public Double buscarPrecioTHab(int idTipoHAbitacion) {
         TipoHabitacion tHabPrecio = new TipoHabitacion();
-        String sql = "SELECT Precio FROM tipohabitacion WHERE codigo = ? AND estado = 1";
+        String sql = "SELECT Precio FROM tipohabitacion WHERE idTipoHabitacion = ? AND estado = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, codigo);
+            ps.setInt(1, idTipoHAbitacion);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 tHabPrecio.setPrecio(rs.getDouble("Precio"));
