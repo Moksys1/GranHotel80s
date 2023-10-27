@@ -115,7 +115,7 @@ public class TipoHabitacionData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 tHabPrecio.setPrecio(rs.getDouble("Precio"));
-                System.out.println(tHabPrecio.getPrecio());
+                //System.out.println(tHabPrecio.getPrecio());
             }else {
                 JOptionPane.showMessageDialog(null, "No existe ese Tipo de Habitacion.");
             }

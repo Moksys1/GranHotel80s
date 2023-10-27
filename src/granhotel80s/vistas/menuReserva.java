@@ -63,6 +63,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
         modelo = (DefaultTableModel) jTreserva.getModel();
 //        listaH = habData.obtenerHabitacionesDesocupadas();
         listaH = habData.obtenerHabitaciones();
+        listaTH=tipoHdata.listarTipoHabitacion();
 
         // Con esto le doy formato dia, mes, año a la fecha
         jDfechaE.setDateFormatString("dd-MM-yyyy");
@@ -90,9 +91,9 @@ public class menuReserva extends javax.swing.JInternalFrame {
 
     private void cargarHabitaciones() {
        
-        for (Habitacion hab : listaH) {
+        for (TipoHabitacion thab : listaTH) {
       
-            jCtipoH.addItem(hab);
+            jCtipoH.addItem(thab);
         }
     }
     @SuppressWarnings("unchecked")
@@ -660,7 +661,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonReservar;
-    private javax.swing.JComboBox<Habitacion> jCtipoH;
+    private javax.swing.JComboBox<TipoHabitacion> jCtipoH;
     private com.toedter.calendar.JDateChooser jDfechaE;
     private com.toedter.calendar.JDateChooser jDfechaS;
     private javax.swing.JLabel jLabel1;
