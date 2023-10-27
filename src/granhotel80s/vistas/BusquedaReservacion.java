@@ -282,7 +282,6 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
     }
 
     private void filtrarHuespedConElDni() {
-
         
             String dni = jTDNIhuesped.getText();
            
@@ -308,15 +307,25 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
     }
 
     public void cambioDeFecha() {
+        //Obtiene la fila seleccionada
         int fila = jTable1.getSelectedRow();
-
+        
+        
+        //Obtiene el valor de la columna 0 de la fila seleccionada, lo convierte a un entero y lo asigna a la variable id
         int id = Integer.parseInt(this.jTable1.getValueAt(fila, 0).toString());
+        
+        
+        //Obtiene el valor de la columna 3 de la fila seleccionada y lo convierte a una cadena de texto
         String fechaString = jTable1.getValueAt(fila, 3).toString();
 
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            
+            //Convierte la cadena fechaString en un date.
             Date nuevaFecha = new Date(dateFormat.parse(fechaString).getTime());
+            
             resData.modificarFecha(nuevaFecha, id);
+            
             JOptionPane.showMessageDialog(null, "Fecha modificada con éxito.");
 
         } catch (Exception e) {

@@ -181,4 +181,25 @@ public class HabitacionData {
 
     }
     
+    public void cambiarEstadoHabitacion(int idHabitacion) {
+        String sql = "UPDATE habitacion SET estado = NOT estado WHERE idHabitacion = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idHabitacion);
+
+            int filasActualizadas = ps.executeUpdate();
+
+            if (filasActualizadas > 0) {
+                System.out.println("El estado de la habitacion ha sido cambiado con éxito.");
+            } else {
+                System.out.println("No se pudo cambiar el estado de la habitacion.");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }

@@ -1,7 +1,15 @@
 package granhotel80s.vistas;
 
+import granhotel80s.accesoADatos.HabitacionData;
 import granhotel80s.accesoADatos.HuespedData;
+import granhotel80s.accesoADatos.ReservaData;
 import granhotel80s.entidades.Huesped;
+import granhotel80s.entidades.Reserva;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -10,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
     private HuespedData huespedData;
+    private ReservaData resData;
+    private HabitacionData habiData;
     private static boolean confirmado = false;
     private List<Huesped> listaHuesped;
     private DefaultTableModel modelo;
@@ -23,20 +33,20 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     private static String cantP;
     private static long diasR;
     private static double precioFinal;
-    private static String  tipoHabS;
-    
-   
+    private static String tipoHabS;
 
     public RegistroHuespedes() {
         this.idHab = menuReserva.getidHab();
-        this.fecha1=menuReserva.getfecha1();
-        this.fecha2=menuReserva.getfecha2();
-        this.diasR=menuReserva.getdiasR();
-        this.cantP=menuReserva.getcantP();
-        this.precioFinal=menuReserva.getprecioFinal();
-        this. tipoHabS=menuReserva.gettipoHaString();
+        this.fecha1 = menuReserva.getfecha1();
+        this.fecha2 = menuReserva.getfecha2();
+        this.diasR = menuReserva.getdiasR();
+        this.cantP = menuReserva.getcantP();
+        this.precioFinal = menuReserva.getprecioFinal();
+        this.tipoHabS = menuReserva.gettipoHaString();
         initComponents();
         huespedData = new HuespedData();
+        resData = new ReservaData();
+        habiData = new HabitacionData();
         listaHuesped = huespedData.listarHuesped();
         modelo = new DefaultTableModel();
         modelo = (DefaultTableModel) jTablehuespedes.getModel();
@@ -48,7 +58,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     private void cargaHuespedes(Huesped hues) {
         HuespedData verHuesped = new HuespedData();
 //      System.out.println((String)hues.toString());
-        modelo.addRow(new Object[]{hues.getIdHuesped(),hues.getDni(), hues.getApellido(), hues.getNombre(), hues.getTelefono(), hues.isEstado()});
+        modelo.addRow(new Object[]{hues.getIdHuesped(), hues.getDni(), hues.getApellido(), hues.getNombre(), hues.getTelefono(), hues.isEstado()});
 
     }
 
@@ -76,11 +86,10 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     private void cargaHuespedes() {
         borrarFilaTabla();
         for (Huesped h : listaHuesped) {
-            modelo.addRow(new Object[]{h.getIdHuesped(),h.getDni(), h.getApellido(), h.getNombre(), h.getTelefono(), h.isEstado()});
+            modelo.addRow(new Object[]{h.getIdHuesped(), h.getDni(), h.getApellido(), h.getNombre(), h.getTelefono(), h.isEstado()});
         }
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -409,17 +418,28 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
     private void jBGuardarNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarNuevoActionPerformed
         try {
             Huesped persona = new Huesped();
+            if (jTDni.getText().isEmpty() || jTNombre.getText().isEmpty() || jTApellido.getText().isEmpty() || jTEmail.getText().isEmpty() || jTDomicilio.getText().isEmpty() || jTelefono.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.");
+            } else {
 
-            persona.setDni(Integer.parseInt(jTDni.getText()));
-            persona.setNombre(jTNombre.getText());
-            persona.setApellido(jTApellido.getText());
-            persona.setCorreo(jTEmail.getText());
-            persona.setDomicilio(jTDomicilio.getText());
-            persona.setTelefono(jTelefono.getText());
-            persona.setEstado(true);
+                persona.setDni(Integer.parseInt(jTDni.getText()));
+                persona.setNombre(jTNombre.getText());
+                persona.setApellido(jTApellido.getText());
+                persona.setCorreo(jTEmail.getText());
+                persona.setDomicilio(jTDomicilio.getText());
+                persona.setTelefono(jTelefono.getText());
+                persona.setEstado(true);
 
-            huespedData.guardarHuesped(persona);
+                huespedData.guardarHuesped(persona);
 
+                jTDni.setText("");
+                jTNombre.setText("");
+                jTApellido.setText("");
+                jTEmail.setText("");
+                jTDomicilio.setText("");
+                jTelefono.setText("");
+                jCheckBoxActivo.setSelected(false);
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.");
         }
@@ -507,7 +527,6 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
 //    Pestaña Busqueda de reserva
 
     private void jBreservaBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBreservaBuscarActionPerformed
-          
 
         try {
             buscarHues = huespedData.BuscarHuespedPorDni(Integer.parseInt(jTFbuscaHuepedXDni.getText()));
@@ -516,7 +535,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
                 cargaHuespedes(buscarHues);
             } else {
                 borrarFilaTabla();
-               cargaHuespedes();
+                cargaHuespedes();
             }
 
         } catch (NumberFormatException ex) {
@@ -534,15 +553,26 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         int filaSeleccionada = jTablehuespedes.getSelectedRow();
 
         if (filaSeleccionada != -1) {
+
             Object idHuspedD = jTablehuespedes.getValueAt(filaSeleccionada, 0);
 
-            JOptionPane.showMessageDialog(null, "ID huésped: " + idHuspedD + tipoHabS+"  "+fecha1+"  "+fecha2+"  "+cantP+"  "+precioFinal+"  "+ idHab);
-           
-   
+            Reserva reserva = new Reserva();
+            
+            reserva.setIdHuesped((int) idHuspedD);
+            reserva.setIdHabitacion(idHab);
+            reserva.setCantPersonas(Integer.parseInt(cantP));
+            reserva.setFechaEntrada(LocalDate.parse(fecha1, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            reserva.setFechaSalida(LocalDate.parse(fecha2, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            reserva.setEstado(true);
+
+            resData.crearReserva(reserva);
+            
+            habiData.cambiarEstadoHabitacion(idHab);
+            JOptionPane.showMessageDialog(null, "aaaaaa");
+                    //   JOptionPane.showMessageDialog(null, "ID huésped: " + idHuspedD + tipoHabS+"  "+fecha1+"  "+fecha2+"  "+cantP+"  "+precioFinal+"  "+ idHab);
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila primero.");
         }
-        
 
         borrarFilaTabla();
         cargaHuespedes();
