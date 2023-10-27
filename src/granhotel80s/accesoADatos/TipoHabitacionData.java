@@ -116,8 +116,6 @@ public class TipoHabitacionData {
             if (rs.next()) {
                 tHabPrecio.setPrecio(rs.getDouble("Precio"));
                 //System.out.println(tHabPrecio.getPrecio());
-            }else {
-                JOptionPane.showMessageDialog(null, "No existe ese Tipo de Habitacion.");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla TipoHabitacion.");
