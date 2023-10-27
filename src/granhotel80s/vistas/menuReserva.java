@@ -61,9 +61,6 @@ public class menuReserva extends javax.swing.JInternalFrame {
         habData = new HabitacionData();
         reData = new ReservaData();
         modelo = (DefaultTableModel) jTreserva.getModel();
-//        listaH = habData.obtenerHabitacionesDesocupadas();
-        listaH = habData.obtenerHabitaciones();
-        listaTH=tipoHdata.listarTipoHabitacion();
 
         // Con esto le doy formato dia, mes, año a la fecha
         jDfechaE.setDateFormatString("dd-MM-yyyy");
@@ -80,21 +77,13 @@ public class menuReserva extends javax.swing.JInternalFrame {
         armarCabeceraDeLaTabla();
         cargarHabitaciones();
     }
-//
-//    private void cargarHabitaciones() {
-//
-//        jCtipoH.addItem("StdSimple");
-//        jCtipoH.addItem("StdDoble");
-//        jCtipoH.addItem("StdTriple");
-//        jCtipoH.addItem("Suite Lujo");
-//    }
 
     private void cargarHabitaciones() {
-       
-        for (TipoHabitacion thab : listaTH) {
-      
-            jCtipoH.addItem(thab);
-        }
+
+        jCtipoH.addItem("StdSimple");
+        jCtipoH.addItem("StdDoble");
+        jCtipoH.addItem("StdTriple");
+        jCtipoH.addItem("Suite Lujo");
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -266,9 +255,9 @@ public class menuReserva extends javax.swing.JInternalFrame {
                         .addComponent(jDfechaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jDfechaS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TfCantidadP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -458,120 +447,11 @@ public class menuReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
-         
-            
-//       
-////        String tipoHCB = (String) jCtipoH.getSelectedItem();
-////        listaH = habData.obtenerHabitacionesDesocupadas(tipoHCB);
-//        borrarFilasTabla();
-//
-//        try {
-//
-//            String cantidadP = TfCantidadP.getText();
-//            cantP=cantidadP;
-//            String selTipoH = jCtipoH.getSelectedItem().toString();
-//            int numIng = Integer.parseInt(cantidadP);
-//            
-//           
-//
-//            if (cantidadP != "" && selTipoH != "" && fechaIn != null && fechaOut != null) {
-//
-//                for (Habitacion habitacion : listaH) {
-//                    modelo.addRow(new Object[]{
-//                        habitacion.getIdHabitacion(),
-//                        habitacion.getIdTipoHabitacion(),
-//                        habitacion.getCategoria(),
-//                        habitacion.getPiso(),
-//                        habitacion.getNroHabitacion()
-//                    });
-//                }
-//               // System.out.println("cantidadP" + " " + "selTipoH" + " " + "fechae" + " " + "fechas");
-//                //System.out.println(cantidadP + " " + selTipoH + " " + fechaIn + " " + fechaOut);
-
-////==================================================================================================== 
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Por favor completar todos los campos ");
-//            }
-//
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "Cantidad de personas no válidas.");
-//        } catch (DateTimeParseException e) {
-//            JOptionPane.showMessageDialog(null, "Error en el formato de fecha/\"Por favor, seleccione ambas fechas.\"");
-//
-//        }
-        
-        borrarFilasTabla();
-//        
-//        try {
-//             
-//            String cantidadP = TfCantidadP.getText();
-//            cantP=cantidadP;
-//            int numIng = Integer.parseInt(cantidadP);
-////            Calendar fechae = Calendar.getInstance();
-////            Calendar fechas = Calendar.getInstance();
-//            String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
-//            String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
-//            fecha1=fechae;
-//            fecha2=fechas;
-//            if (TfCantidadP != null && fechae != "" && fechas != "") {
-//                for (Habitacion habitacion : listaH) {
-//
-//                    modelo.addRow(new Object[]{
-//                        habitacion.getIdHabitacion(),
-//                        habitacion.getIdTipoHabitacion(),
-//                        habitacion.getCategoria(),
-//                        habitacion.getPiso(),
-//                        habitacion.getNroHabitacion()
-//                    });
-//
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Completar todos los campos ");
-//            }
-            ////====================================================================================================
-////  ====================================== Calculo de dias =========================================
-////====================================================================================================
                 
-                 
-//                  fechae = jDfechaE.getCalendar();
-//                  fechas = jDfechaS.getCalendar();
-//                 
-//            if (fechae.getTimeInMillis() < fechas.getTimeInMillis()) {
-//
-//                    long startTime = fechae.getTimeInMillis();
-//                    long endTime = fechas.getTimeInMillis();
-//                    long diasDesde = (long) Math.floor(startTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora 
-//                    long diasHasta = (long) Math.floor(endTime / (1000 * 60 * 60 * 24)); // convertimos a dias, para que no afecten cambios de hora
-//                    long diaDif = diasHasta - diasDesde;
-//                    diasR=diaDif;
-//                    SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); 
-//
-//
-//                    String fecha1 = formato.format(fechae.getTime());
-//                    String fecha2 = formato.format(fechas.getTime());
-//                  
-//                    
-//                    JOptionPane.showMessageDialog(null, "Cantidad de dias: " + diaDif);
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "La fecha de salida NO puede ser anterior a la de ingreso");
-//                }
-//            if (fechae != null && fechas != null) {
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//                LocalDate jDfechaE = LocalDate.parse(fechae, formatter);
-//                LocalDate jDfechaS = LocalDate.parse(fechas, formatter);
-//               
-//                long diasReserva = jDfechaE.until(jDfechaS, ChronoUnit.DAYS);
-//                diasR=diasReserva;
-//              
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Por favor, seleccione ambas fechas.");
-//            }
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "Cantidad de personas no válidas.");
-//        } catch (DateTimeParseException e) {
-//            JOptionPane.showMessageDialog(null, "Error en el formato de fecha/\"Por favor, seleccione ambas fechas.\"");
-//        }
+        String tipoHCB = (String) jCtipoH.getSelectedItem();
+        listaH = habData.obtenerHabitacionesDesocupadas(tipoHCB);
+        borrarFilasTabla();
+        
      try {
             String cantidadP = TfCantidadP.getText();
             cantP = cantidadP;
@@ -661,7 +541,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonReservar;
-    private javax.swing.JComboBox<TipoHabitacion> jCtipoH;
+    private javax.swing.JComboBox<String> jCtipoH;
     private com.toedter.calendar.JDateChooser jDfechaE;
     private com.toedter.calendar.JDateChooser jDfechaS;
     private javax.swing.JLabel jLabel1;
@@ -743,12 +623,4 @@ public class menuReserva extends javax.swing.JInternalFrame {
     public static String gettipoHaString() {
         return tipoHabS;
     }
-    //ariel
-//   reservation = new Reserva();
-//            reservation.setIdHuesped(idHuespedSeleccionado);
-//            idHabitacionSeleccionada = (int) jTreserva.getValueAt(filaSeleccionada, 0); //Obtengo IdHabitacion
-//            reservation.setIdHabitacion(idHabitacionSeleccionada);
-//            reservation.setFechaEntrada(jDfechaE.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()); //Obtengo la fecha de entrada
-//            reservation.setFechaSalida(jDfechaS.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()); //Obtengo la fecha de salida
-//            reservation.setCantPersonas(Integer.parseInt(TfCantidadP.getText())); //Obtengo la cantidad de personas
 }

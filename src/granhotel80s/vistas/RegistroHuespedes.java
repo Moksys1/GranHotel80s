@@ -568,8 +568,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
             resData.crearReserva(reserva);
             
             habiData.cambiarEstadoHabitacion(idHab);
-            JOptionPane.showMessageDialog(null, "aaaaaa");
-                    //   JOptionPane.showMessageDialog(null, "ID huésped: " + idHuspedD + tipoHabS+"  "+fecha1+"  "+fecha2+"  "+cantP+"  "+precioFinal+"  "+ idHab);
+           //   JOptionPane.showMessageDialog(null, "ID huésped: " + idHuspedD + tipoHabS+"  "+fecha1+"  "+fecha2+"  "+cantP+"  "+precioFinal+"  "+ idHab);
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila primero.");
         }
