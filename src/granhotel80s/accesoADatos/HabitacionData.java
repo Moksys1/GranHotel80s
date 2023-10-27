@@ -1,4 +1,3 @@
-
 package granhotel80s.accesoADatos;
 
 import granhotel80s.entidades.Habitacion;
@@ -11,21 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-
 public class HabitacionData {
     
     private Connection con = null;
     
     public HabitacionData() {
-        
          con = Conexion.getConnection();
-         
 }
     
     public void guardarHabitacion(Habitacion habitacion) {
         String sql = "INSERT INTO habitacion(idTipoHabitacion, categoria, Piso, nroHabitacion, estado) "
                 + " VALUES (?, ? , ? , ? , ?)";
-                
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, habitacion.getIdTipoHabitacion());
@@ -41,10 +36,8 @@ public class HabitacionData {
                 JOptionPane.showMessageDialog(null, "Habitacion añadida con exito.");
             }
             ps.close();
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion");
-
         }
     }
     
@@ -81,21 +74,14 @@ public class HabitacionData {
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Habitacion eliminada correctamente.");
             }
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Habitacion.");
         }
-    
-    
-    
     }
     
     public List<Habitacion> obtenerHabitaciones() {
-
         ArrayList<Habitacion> habitaciones = new ArrayList<>();
-
         String sql = "SELECT * FROM habitacion";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -115,25 +101,18 @@ public class HabitacionData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
         }
-
         return habitaciones;
-
     }
     
     public List<Habitacion> obtenerHabitacionesDesocupadas(String cat) {
-
         ArrayList<Habitacion> habitDesocupadas = new ArrayList<>();
-
         String sql = "SELECT * FROM habitacion WHERE estado = 1 AND categoria = ?";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, cat);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 Habitacion habi = new Habitacion();
-                
                 
                 habi.setIdHabitacion(rs.getInt("idHabitacion"));
                 habi.setIdTipoHabitacion(rs.getInt("idTipoHabitacion"));
@@ -141,23 +120,17 @@ public class HabitacionData {
                 habi.setPiso(rs.getInt("Piso"));
                 habi.setNroHabitacion(rs.getInt("nroHabitacion"));
                 habitDesocupadas.add(habi);
-
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
         }
-
         return habitDesocupadas;
-
     }
     
     public List<Habitacion> obtenerHabitacionesOcupadas() {
-
         ArrayList<Habitacion> habitDesocupadas = new ArrayList<>();
-
         String sql = "SELECT * FROM habitacion WHERE estado = 0 ";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -170,15 +143,12 @@ public class HabitacionData {
                 habi.setPiso(rs.getInt("Piso"));
                 habi.setNroHabitacion(rs.getInt("nroHabitacion"));
                 habitDesocupadas.add(habi);
-
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
         }
-
         return habitDesocupadas;
-
     }
     
     public void cambiarEstadoHabitacion(int idHabitacion) {
@@ -195,11 +165,9 @@ public class HabitacionData {
             } else {
                 System.out.println("No se pudo cambiar el estado de la habitacion.");
             }
-
             ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
 }

@@ -2,7 +2,6 @@ package granhotel80s.accesoADatos;
 
 import granhotel80s.entidades.Huesped;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,15 +15,12 @@ public class HuespedData {
     private Connection con = null;
     
     public HuespedData() {
-        
          con = Conexion.getConnection();
-         
 }
    
     public void guardarHuesped(Huesped huesped) {
         String sql = "INSERT INTO huesped(dni, nombre, apellido, correo, domicilio, telefono, estado) "
                 + " VALUES (?, ?, ?, ? ,?, ?, ?)";
-                
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, huesped.getDni());
@@ -45,7 +41,6 @@ public class HuespedData {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla huesped");
-
         }
     }
      public void eliminarHuesped(int id) {
@@ -57,12 +52,11 @@ public class HuespedData {
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Huesped eliminado correctamente.");
             }
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Huesped.");
         }
-        
     }
+     
     public Huesped BuscarHuesped(int id) {
         Huesped huesped = null;
         String sql = "SELECT idHuesped, dni, nombre, apellido, correo, domicilio, telefono FROM huesped WHERE idHuesped = ? AND estado = 1";
@@ -152,11 +146,8 @@ public class HuespedData {
     }
     
     public List<Huesped> listarHuesped() {
-
         ArrayList<Huesped> huesped = new ArrayList<>();
-
         String sql = "SELECT * FROM huesped";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -178,8 +169,6 @@ public class HuespedData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
         }
-
         return huesped;
-
     }
 }

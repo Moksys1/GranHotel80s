@@ -79,7 +79,6 @@ public class Habitacion {
 
     @Override
     public String toString() {
-        return  categoria ;
+        return categoria;
     }
-
 }

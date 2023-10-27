@@ -1,13 +1,3 @@
-//⮚	El proceso de hacer una Reserva se organizará. El método Crear Reserva:
-//1.	Se introduce por teclado fechaEntrada y fechaSalida y cantidad de personas.
-//2.	Se busca un “tipo de habitación” para esa cantidad de personas y el precio. 
-//3.	Se devuelve una lista de las habitaciones que estén Libres, de ese “Tipo Habitación”.
-//Calcular monto estadía:  en la reserva, se calcula como precio por noche (de Tipo Habitación) por cantidad de días de estadía ingresado. Devuelve el monto*.
-//4.	Se construye la reserva con fechaCheckin, fechaCheckout, Huésped, Habitación, monto*, estado=1.
-//5.	La Habitación se marca Ocupada(1), en la fecha de salida vuelve a su estado Libre.
-//
-//⮚	Método “finReserva” recibe un Huésped, permite buscar una reserva se marca, de Activa(1) a Inactiva(0). Se busca la habitación y se marca Libre(0). 
-//⮚	Búsqueda de Reservas por huésped o fechas: devuelve una Reserva.
 package granhotel80s.accesoADatos;
 
 import granhotel80s.entidades.Habitacion;
@@ -19,27 +9,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Usuario
- */
 public class ReservaData {
 
     private Connection con = null;
 
     {
-
         con = Conexion.getConnection();
-
     }
 
     public void crearReserva(Reserva reser) {
-
         String sql = "INSERT INTO reserva(idHuesped, idHabitacion, cantPersonas, fechaEntrada, fechaSalida, estado)"
                 + "VALUES ( ?, ?, ?, ?, ?, ?)";
         try {
@@ -56,13 +38,12 @@ public class ReservaData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 reser.setIdReserva(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "reserva con exito.");
+                JOptionPane.showMessageDialog(null, "Reserva realizada con exito.");
             }
             ps.close();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva");
-
         }
     }
 
@@ -75,11 +56,9 @@ public class ReservaData {
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "reserva eliminada correctamente.");
             }
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva.");
         }
-
     }
 
     public Reserva BuscarReserva(int id) {
@@ -105,7 +84,6 @@ public class ReservaData {
                 JOptionPane.showMessageDialog(null, "No existe esta reserva.");
             }
             ps.close();
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva.");
         }
@@ -135,7 +113,6 @@ public class ReservaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva");
         }
-
     }
 
     public void cambiarEstadoReserva(int idReserva) {
@@ -152,7 +129,6 @@ public class ReservaData {
             } else {
                 System.out.println("No se pudo cambiar el estado de la reserva.");
             }
-
             ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -160,11 +136,8 @@ public class ReservaData {
     }
 
     public List<Reserva> listarReservas() {
-
         ArrayList<Reserva> reserva = new ArrayList<>();
-
         String sql = "SELECT * FROM reserva";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -185,26 +158,22 @@ public class ReservaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla habitacion.");
         }
-
         return reserva;
-
     }
-    
+
     public ArrayList<Object[]> filtrarHuespedPorDni(String dni) {
         ArrayList<Object[]> listaDeReservasDeHuesped = new ArrayList<>();
-
         try {
             String sql = "SELECT reserva.idReserva, huesped.dni, reserva.fechaEntrada, reserva.fechaSalida, habitacion.nroHabitacion, reserva.estado "
                     + "FROM reserva "
                     + "JOIN huesped ON reserva.idHuesped = huesped.idHuesped "
                     + "JOIN habitacion ON reserva.idHabitacion = habitacion.idHabitacion "
                     + "WHERE huesped.dni LIKE ?";
-            
-            //LIKEse utiliza para buscar un patrón específico dentro de una columna
 
+            //LIKEse utiliza para buscar un patrón específico dentro de una columna
             PreparedStatement ps = con.prepareStatement(sql);
             // Agregue el símbolo % para buscar cualquier numero en cualquier posición del dni proporcionado
-            ps.setString(1, "%" + dni + "%"); 
+            ps.setString(1, "%" + dni + "%");
 
             ResultSet rs = ps.executeQuery();
 
@@ -286,5 +255,4 @@ public class ReservaData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla reserva");
         }
     }
-
 }

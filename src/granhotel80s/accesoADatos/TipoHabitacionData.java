@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package granhotel80s.accesoADatos;
 
-import com.sun.org.apache.xerces.internal.util.FeatureState;
-import granhotel80s.entidades.Habitacion;
 import granhotel80s.entidades.TipoHabitacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,14 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author hernan
- */
 public class TipoHabitacionData {
 
     private Connection con = null;
@@ -115,7 +102,6 @@ public class TipoHabitacionData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 tHabPrecio.setPrecio(rs.getDouble("Precio"));
-                //System.out.println(tHabPrecio.getPrecio());
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla TipoHabitacion.");
@@ -177,12 +163,10 @@ public class TipoHabitacionData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la Tabla TipoHabitacion");
         }
     }
+    
      public List<TipoHabitacion> listarTipoHabitacion() {
-
         ArrayList<TipoHabitacion> listarTipoH = new ArrayList<>();
-
         String sql = "SELECT * FROM tipohabitacion";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -197,14 +181,11 @@ public class TipoHabitacionData {
                 tipohab.setPrecio(rs.getDouble("Precio"));
                 tipohab.setEstado(rs.getBoolean("estado"));
                 listarTipoH.add(tipohab);
-
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla tipo habitacion.");
         }
-
         return listarTipoH;
-
     }
 }

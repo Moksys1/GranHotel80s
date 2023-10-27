@@ -1,28 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package granhotel80s;
 
 import granhotel80s.accesoADatos.Conexion;
 import granhotel80s.accesoADatos.HabitacionData;
 import granhotel80s.accesoADatos.HuespedData;
 import granhotel80s.accesoADatos.TipoHabitacionData;
-import granhotel80s.entidades.Habitacion;
-import granhotel80s.entidades.Huesped;
-import granhotel80s.entidades.TipoHabitacion;
 import java.sql.Connection;
 
-/**
- *
- * @author Moksys
- */
 public class GranHotel80s {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         
         Connection con = Conexion.getConnection();
@@ -33,7 +18,7 @@ public class GranHotel80s {
         //TipoHabitacion tHab213 = new TipoHabitacion(1, 213, "ET3S", 3, 3, "3S", 8550, true);
 //        TipoHabitacion tHab11 = new TipoHabitacion(1, 11, "ET3S", 2, 3, "3S", 7050, true);
         
-        TipoHabitacionData tHabData1 = new TipoHabitacionData();
+//        TipoHabitacionData tHabData1 = new TipoHabitacionData();
 //----------------------------------------------------------------------------------------
         // Test de tipo de habitacion
         //tHabData1.modificarTipoHabitacion(tHab213);

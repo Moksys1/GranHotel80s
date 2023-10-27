@@ -103,6 +103,4 @@ public class Huesped {
     public String toString() {
         return "" + "" + idHuesped + "," + dni + ", " + nombre + ", " + apellido + "," + correo + ", " + domicilio + ", " + telefono + ", " + estado + '}';
     }
-
-    
 }

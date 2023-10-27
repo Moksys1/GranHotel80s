@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package granhotel80s.entidades;
 
-/**
- *
- * @author herna
- */
 public class TipoHabitacion {
+
     private int idTipoHabitacion;
     private String codigo;
     private int cantMaxPersonas;
@@ -98,7 +90,6 @@ public class TipoHabitacion {
 
     @Override
     public String toString() {
-        return ""  + TipoDeCamas ;
+        return "" + TipoDeCamas;
     }
-    
 }
