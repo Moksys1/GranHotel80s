@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class BusquedaReservacion extends javax.swing.JInternalFrame {
@@ -31,6 +33,22 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
 
         armarCabeceraTabla();
         cargaDatosReserva();
+
+        jBCancelarReserva.setEnabled(false);
+
+        // Agregar un ListSelectionListener a la tabla
+        jTableReservas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    // Verificar si se ha seleccionado una fila
+                    if (jTableReservas.getSelectedRow() != -1) {
+                        jBCancelarReserva.setEnabled(true);
+                    } else {
+                        jBCancelarReserva.setEnabled(false);
+                    }
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -43,7 +61,7 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableReservas = new javax.swing.JTable();
         jTDNIhuesped = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jBSalir = new javax.swing.JButton();
         jBModificarReserva = new javax.swing.JButton();
         jBCancelarReserva = new javax.swing.JButton();
         jBActualizarTabla = new javax.swing.JButton();
@@ -86,11 +104,11 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton2.setText("Salir");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBSalir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jBSalir.setText("Salir");
+        jBSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBSalirActionPerformed(evt);
             }
         });
 
@@ -142,7 +160,7 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(295, 295, 295)
-                        .addComponent(jButton2)))
+                        .addComponent(jBSalir)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -162,7 +180,7 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
                     .addComponent(jBModificarReserva)
                     .addComponent(jBActualizarTabla))
                 .addGap(60, 60, 60)
-                .addComponent(jButton2)
+                .addComponent(jBSalir)
                 .addGap(32, 32, 32))
         );
 
@@ -181,9 +199,9 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jBSalirActionPerformed
 
     private void jTDNIhuespedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTDNIhuespedKeyReleased
         filtrarHuespedConElDni();
@@ -193,7 +211,9 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
         int filaSeleccionada = jTableReservas.getSelectedRow();
         if (filaSeleccionada != -1) {
             int idReserva = (Integer) modelo.getValueAt(filaSeleccionada, 0);
+            int idHabitacion = (Integer) modelo.getValueAt(filaSeleccionada, 4);
             resData.cambiarEstadoReserva(idReserva);
+            habiData.cambiarEstadoHabitacion(idHabitacion);
             JOptionPane.showMessageDialog(null, "Cambio de reserva con exito.");
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
@@ -218,7 +238,7 @@ public class BusquedaReservacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBActualizarTabla;
     private javax.swing.JButton jBCancelarReserva;
     private javax.swing.JButton jBModificarReserva;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jBSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
