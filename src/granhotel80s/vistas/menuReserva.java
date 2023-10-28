@@ -41,6 +41,8 @@ public class menuReserva extends javax.swing.JInternalFrame {
     private static long diasR;
     private static double precioFinal;
     private static String tipoHabS;
+    private static TipoHabitacionData verCantPer;
+    public static int numIng;
 
     public menuReserva() {
         initComponents();
@@ -49,9 +51,9 @@ public class menuReserva extends javax.swing.JInternalFrame {
         habData = new HabitacionData();
         reData = new ReservaData();
         modelo = (DefaultTableModel) jTreserva.getModel();
-        
+
         jButtonReservar.setEnabled(false);
-        
+
         // Agregar un ListSelectionListener a la tabla
         jTreserva.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -231,9 +233,9 @@ public class menuReserva extends javax.swing.JInternalFrame {
                     .addComponent(jDfechaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDfechaS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(61, 61, 61)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCtipoH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,21 +371,30 @@ public class menuReserva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReservarActionPerformed
+        int cantMaxPer;
         int filaSeleccionada = jTreserva.getSelectedRow();
         if (filaSeleccionada != -1) {
-            
-            Object idHabitacionH = jTreserva.getValueAt(filaSeleccionada, 0);
-            idHab = (int) idHabitacionH;
-            double precio = tipoHdata.buscarPrecioTHab(idHab);
-            jTprecio1.setText(String.valueOf(precio));
 
-            RegistroHuespedes regHues = new RegistroHuespedes();
-            MainMenu.escritorio.add(regHues);
-            regHues.toFront();
-            regHues.setVisible(true);
-            Dimension desktopSize = MainMenu.escritorio.getSize();
-            Dimension FrameSize = regHues.getSize();
-            regHues.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+            Object idHabitacionH = jTreserva.getValueAt(filaSeleccionada, 0);
+            Object idTipoHabitacionH = jTreserva.getValueAt(filaSeleccionada, 1);
+            idHab = (int) idHabitacionH;
+            int idTHab = (int) idTipoHabitacionH;
+            cantMaxPer = verCantPer.buscarCantidadMaximaPersonas(idTHab);
+            if (numIng <= cantMaxPer) {
+
+                double precio = tipoHdata.buscarPrecioTHab(idHab) * numIng;
+                jTprecio1.setText(String.valueOf(precio));
+
+                RegistroHuespedes regHues = new RegistroHuespedes();
+                MainMenu.escritorio.add(regHues);
+                regHues.toFront();
+                regHues.setVisible(true);
+                Dimension desktopSize = MainMenu.escritorio.getSize();
+                Dimension FrameSize = regHues.getSize();
+                regHues.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+            } else {
+                JOptionPane.showMessageDialog(null, "Cant. de personas incorrecta, debe ser " + cantMaxPer + " maximo");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila primero.");
         }
@@ -411,14 +422,16 @@ public class menuReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBbuscarReservaActionPerformed
 
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
+        borrarFilasTabla();
         String tipoHCB = (String) jCtipoH.getSelectedItem();
         listaH = habData.obtenerHabitacionesDesocupadas(tipoHCB);
-        borrarFilasTabla();
+        JComboBox<String> jCtipoH = new JComboBox<>();
+        String tipoHabS = (String) jCtipoH.getSelectedItem();
         try {
             String cantidadP = TfCantidadP.getText();
             cantP = cantidadP;
             if (cantidadP != null && !cantidadP.isEmpty()) {
-                int numIng = Integer.parseInt(cantidadP);
+                numIng = Integer.parseInt(cantidadP);
                 String fechae = ((JTextField) jDfechaE.getDateEditor().getUiComponent()).getText();
                 String fechas = ((JTextField) jDfechaS.getDateEditor().getUiComponent()).getText();
                 fecha1 = fechae;
@@ -457,9 +470,6 @@ public class menuReserva extends javax.swing.JInternalFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.getMessage());
         }
-
-        JComboBox<String> jCtipoH = new JComboBox<>();
-        String tipoHabS = (String) jCtipoH.getSelectedItem();
     }//GEN-LAST:event_jBbuscarActionPerformed
 
     private void jTreservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreservaMouseClicked
@@ -467,15 +477,14 @@ public class menuReserva extends javax.swing.JInternalFrame {
         if (filaSeleccionada != -1) {
             Object idHabitacionH = jTreserva.getValueAt(filaSeleccionada, 1);
             idHab = (int) idHabitacionH;
-            double precio = tipoHdata.buscarPrecioTHab(idHab);
+            double precio = tipoHdata.buscarPrecioTHab(idHab) * numIng;
             jTprecio1.setText(String.valueOf(precio));
             double cantPDouble = (double) diasR;
             double precioo = precio * cantPDouble;
             jTprecio2.setText(String.valueOf(precioo));
             precioFinal = precioo;
-            
+
         } else {
-            jButtonReservar.setEnabled(false);
             JOptionPane.showMessageDialog(null, "seleccione una fila");
         }
     }//GEN-LAST:event_jTreservaMouseClicked

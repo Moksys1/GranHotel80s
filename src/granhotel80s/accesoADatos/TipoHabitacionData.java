@@ -109,6 +109,23 @@ public class TipoHabitacionData {
         return tHabPrecio.getPrecio();
     }
 
+    public int buscarCantidadMaximaPersonas(int idTipoHAbitacion) {
+        TipoHabitacion tHabCPer = new TipoHabitacion();
+        String sql = "SELECT cantMaxPersonas FROM tipohabitacion WHERE idTipoHabitacion = ? AND estado = 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idTipoHAbitacion);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                tHabCPer.setCantMaxPersonas(rs.getInt("cantMaxPersonas"));
+//                JOptionPane.showMessageDialog(null, tHabCPer.getCantMaxPersonas());
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla TipoHabitacion.");
+        }
+        return tHabCPer.getCantMaxPersonas();
+    }
+
     public void modificarTipoHabitacion(TipoHabitacion mTHabitacion) {
         String sql = "UPDATE tipohabitacion SET codigo = ?, cantMaxPersonas = ?, CantCamas = ?, TipoDeCamas = ?, Precio = ?, estado = ? WHERE idTipoHabitacion = ? ";
         PreparedStatement ps = null;
@@ -163,8 +180,8 @@ public class TipoHabitacionData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la Tabla TipoHabitacion");
         }
     }
-    
-     public List<TipoHabitacion> listarTipoHabitacion() {
+
+    public List<TipoHabitacion> listarTipoHabitacion() {
         ArrayList<TipoHabitacion> listarTipoH = new ArrayList<>();
         String sql = "SELECT * FROM tipohabitacion";
         try {
