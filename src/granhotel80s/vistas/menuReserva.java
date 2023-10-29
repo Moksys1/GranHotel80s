@@ -20,29 +20,29 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class menuReserva extends javax.swing.JInternalFrame {
+public class menuReserva extends javax.swing.JInternalFrame {           //ERROR
 
     private LocalDate fechaEE;
     private LocalDate fechaSS;
     private DefaultTableModel modelo;
+    private Huesped hue;
     private HuespedData huData;
     private HabitacionData habData;
     private ReservaData reData;
     private List<Habitacion> listaH;
     private List<TipoHabitacion> listaTH;
-    private TipoHabitacionData tipoHdata;
-    private TipoHabitacion tipoH;
-    private Huesped hue;
     private TipoHabitacion tiphab;
-    private static int idHab;
+    private TipoHabitacion tipoH;
+    private TipoHabitacionData tipoHdata;
+    private TipoHabitacionData verCantPer;
     private static String fecha1;
     private static String fecha2;
     private static String cantP;
+    private static String tipoHabS;
+    private static int idHab;
+    public static int numIng;
     private static long diasR;
     private static double precioFinal;
-    private static String tipoHabS;
-    private static TipoHabitacionData verCantPer;
-    public static int numIng;
 
     public menuReserva() {
         initComponents();
@@ -51,7 +51,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
         habData = new HabitacionData();
         reData = new ReservaData();
         modelo = (DefaultTableModel) jTreserva.getModel();
-
+        verCantPer = new TipoHabitacionData();
         jButtonReservar.setEnabled(false);
 
         // Agregar un ListSelectionListener a la tabla
@@ -374,17 +374,14 @@ public class menuReserva extends javax.swing.JInternalFrame {
         int cantMaxPer;
         int filaSeleccionada = jTreserva.getSelectedRow();
         if (filaSeleccionada != -1) {
-
             Object idHabitacionH = jTreserva.getValueAt(filaSeleccionada, 0);
             Object idTipoHabitacionH = jTreserva.getValueAt(filaSeleccionada, 1);
             idHab = (int) idHabitacionH;
             int idTHab = (int) idTipoHabitacionH;
             cantMaxPer = verCantPer.buscarCantidadMaximaPersonas(idTHab);
             if (numIng <= cantMaxPer) {
-
                 double precio = tipoHdata.buscarPrecioTHab(idHab) * numIng;
                 jTprecio1.setText(String.valueOf(precio));
-
                 RegistroHuespedes regHues = new RegistroHuespedes();
                 MainMenu.escritorio.add(regHues);
                 regHues.toFront();
@@ -398,7 +395,6 @@ public class menuReserva extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila primero.");
         }
-
         borrarFilasTabla();
         jDfechaE.setDate(null);
         jDfechaS.setDate(null);
@@ -492,7 +488,7 @@ public class menuReserva extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.TextField TfCantidadP;
     private javax.swing.JButton jBSalir;
-    private javax.swing.JButton jBbuscar;
+    private static javax.swing.JButton jBbuscar;
     private javax.swing.JButton jBbuscarReserva;
     private javax.swing.JButton jButtonReservar;
     private javax.swing.JComboBox<String> jCtipoH;

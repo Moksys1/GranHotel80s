@@ -118,7 +118,7 @@ public class TipoHabitacionData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 tHabCPer.setCantMaxPersonas(rs.getInt("cantMaxPersonas"));
-//                JOptionPane.showMessageDialog(null, tHabCPer.getCantMaxPersonas());
+//                JOptionPane.showMessageDialog(null, tHabCPer.getCantMaxPersonas()); //Punto de control
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla TipoHabitacion.");
