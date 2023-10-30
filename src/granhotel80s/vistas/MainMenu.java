@@ -2,9 +2,11 @@ package granhotel80s.vistas;
 
 import granhotel80s.accesoADatos.Conexion;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class MainMenu extends javax.swing.JFrame {
 
@@ -50,6 +52,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        escritorio.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -222,7 +226,13 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jTiposHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTiposHabitacionActionPerformed
         // TODO add your handling code here:
-        
+        TiposDeHabitaciones tipHabs = new TiposDeHabitaciones();
+        MainMenu.escritorio.add(tipHabs);
+        tipHabs.toFront();
+        tipHabs.setVisible(true);
+        Dimension desktopSize = MainMenu.escritorio.getSize();
+        Dimension FrameSize = tipHabs.getSize();
+        tipHabs.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
     }//GEN-LAST:event_jTiposHabitacionActionPerformed
 
     public static void main(String args[]) {
@@ -266,4 +276,11 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jSobreNosotros;
     private javax.swing.JMenuItem jTiposHabitacion;
     // End of variables declaration//GEN-END:variables
+//class imagenDeFondo extends JPanel()static {
+//    
+//    private Image imagen;
+//    
+//    
+//}
+
 }
