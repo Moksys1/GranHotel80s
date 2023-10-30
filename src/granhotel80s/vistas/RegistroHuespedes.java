@@ -53,11 +53,9 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
         jBasignarReserva.setEnabled(false);
 
-        // Agregar un ListSelectionListener a la tabla
         jTablehuespedes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    // Verificar si se ha seleccionado una fila
                     if (jTablehuespedes.getSelectedRow() != -1) {
                         jBasignarReserva.setEnabled(true);
                     } else {
@@ -103,6 +101,16 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{h.getIdHuesped(), h.getDni(), h.getApellido(), h.getNombre(), h.getTelefono(), h.isEstado()});
         }
     }
+    
+    private void actualizarTabla() {
+    while (modelo.getRowCount() > 0) {
+        modelo.removeRow(0);
+    }
+
+    cargaTodoHuespedes();
+
+    modelo.fireTableDataChanged();
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -530,6 +538,9 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
             } else {
                 confirmado = true;
             }
+            
+//            actualizarTabla();
+            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Debe buscar un huesped o indicar su DNI.");
         }
@@ -543,6 +554,7 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         jCheckBoxActivo.setSelected(false);
 
         borrarFilaTabla();
+        actualizarTabla();
         cargaTodoHuespedes();
     }//GEN-LAST:event_jBEliminarActionPerformed
 
@@ -574,20 +586,25 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
         try {
             int filaSeleccionada = jTablehuespedes.getSelectedRow();
             if (filaSeleccionada != -1) {
-                Object idHuspedD = jTablehuespedes.getValueAt(filaSeleccionada, 0);
-                Reserva reserva = new Reserva();
-                reserva.setIdHuesped((int) idHuspedD);
-                reserva.setIdHabitacion(idHab);
-                reserva.setCantPersonas(Integer.parseInt(cantP));
-                reserva.setFechaEntrada(LocalDate.parse(fecha1, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-                reserva.setFechaSalida(LocalDate.parse(fecha2, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-                reserva.setEstado(true);
+                Boolean estadoHuesped = (Boolean) jTablehuespedes.getValueAt(filaSeleccionada, 5);
+                if (estadoHuesped) {
+                    Object idHuspedD = jTablehuespedes.getValueAt(filaSeleccionada, 0);
+                    Reserva reserva = new Reserva();
+                    reserva.setIdHuesped((int) idHuspedD);
+                    reserva.setIdHabitacion(idHab);
+                    reserva.setCantPersonas(Integer.parseInt(cantP));
+                    reserva.setFechaEntrada(LocalDate.parse(fecha1, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                    reserva.setFechaSalida(LocalDate.parse(fecha2, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                    reserva.setEstado(true);
 
-                resData.crearReserva(reserva);
+                    resData.crearReserva(reserva);
 
-                habiData.cambiarEstadoHabitacion(idHab);
+                    habiData.cambiarEstadoHabitacion(idHab);
 
-                this.dispose();
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "El huesped seleccionado se encuentra inactivo.");
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Selecciona una fila primero.");
             }
@@ -597,8 +614,6 @@ public class RegistroHuespedes extends javax.swing.JInternalFrame {
 
         borrarFilaTabla();
         cargaTodoHuespedes();
-
-
     }//GEN-LAST:event_jBasignarReservaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
