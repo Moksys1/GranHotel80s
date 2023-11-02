@@ -448,7 +448,7 @@ public class menuReserva extends javax.swing.JInternalFrame {           //ERROR
 
                 // Cálculo de la diferencia de días
                 SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-                
+
                 java.util.Date date1 = formato.parse(fechae);
                 java.util.Date date2 = formato.parse(fechas);
 
@@ -464,6 +464,11 @@ public class menuReserva extends javax.swing.JInternalFrame {           //ERROR
                 JOptionPane.showMessageDialog(null, "La cantidad de personas no es válida.");
             }
         } catch (ParseException e) {
+            borrarFilasTabla();
+            JOptionPane.showMessageDialog(null, "Coloque fechas correctas.");
+            jDfechaE.setDate(null);
+            jDfechaS.setDate(null);
+            TfCantidadP.setText("");
         }
     }//GEN-LAST:event_jBbuscarActionPerformed
 
