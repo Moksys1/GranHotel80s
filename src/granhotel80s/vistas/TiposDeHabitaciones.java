@@ -19,6 +19,7 @@ public class TiposDeHabitaciones extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 255, 153));
 
+        jTextPane1.setEditable(false);
         jTextPane1.setBackground(new java.awt.Color(0, 255, 153));
         jTextPane1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jTextPane1.setForeground(new java.awt.Color(0, 0, 0));
