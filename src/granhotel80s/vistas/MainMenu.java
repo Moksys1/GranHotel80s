@@ -46,8 +46,6 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuConsultaReserva = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jTiposHabitacion = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jSobreNosotros = new javax.swing.JMenuItem();
         jSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -138,20 +136,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu2.setText("Más Información");
-        jMenu2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        jSobreNosotros.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jSobreNosotros.setText("Sobre nosotros");
-        jSobreNosotros.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jSobreNosotrosActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jSobreNosotros);
-
-        jMenuBar1.add(jMenu2);
-
         jSalir.setText("Salir");
         jSalir.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -189,10 +173,6 @@ public class MainMenu extends javax.swing.JFrame {
             confirmado = true;
         }
     }//GEN-LAST:event_jSalirMouseClicked
-
-    private void jSobreNosotrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSobreNosotrosActionPerformed
-
-    }//GEN-LAST:event_jSobreNosotrosActionPerformed
 
     private void jMenuConsultaReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuConsultaReservaActionPerformed
         BusquedaReservacion busqRes = new BusquedaReservacion();
@@ -264,7 +244,6 @@ public class MainMenu extends javax.swing.JFrame {
     public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuConsultaReserva;
@@ -273,7 +252,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuRegistroReserva;
     private javax.swing.JMenu jMenuReserva;
     private javax.swing.JMenu jSalir;
-    private javax.swing.JMenuItem jSobreNosotros;
     private javax.swing.JMenuItem jTiposHabitacion;
     // End of variables declaration//GEN-END:variables
 //class imagenDeFondo extends JPanel()static {
