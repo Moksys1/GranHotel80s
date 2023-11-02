@@ -469,6 +469,12 @@ public class menuReserva extends javax.swing.JInternalFrame {           //ERROR
             jDfechaE.setDate(null);
             jDfechaS.setDate(null);
             TfCantidadP.setText("");
+        } catch (NumberFormatException e) {
+            borrarFilasTabla();
+            JOptionPane.showMessageDialog(null, "Coloque cantidad de personas validas.");
+            jDfechaE.setDate(null);
+            jDfechaS.setDate(null);
+            TfCantidadP.setText("");
         }
     }//GEN-LAST:event_jBbuscarActionPerformed
 
